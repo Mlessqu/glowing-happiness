@@ -12,5 +12,5 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp src/logika.hpp)
+add_executable(main src/main.cpp src/logika.hpp src/states.hpp src/utility.hpp)
 target_link_libraries(main PRIVATE SFML::Graphics)

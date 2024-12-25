@@ -1,4 +1,5 @@
 #pragma once
+#include<iostream>
 extern sf::Text zwyciezca_text;
 bool logika(int _wybor, int *_board, int _tura);
 bool check_winner(int *_board);
