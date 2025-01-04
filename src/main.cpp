@@ -20,7 +20,7 @@ int main()
     //---------------------
     // #####@@@@@@@@@@@@@@@@@@@@@@
     // inicjalizacja
-    auto window = sf::RenderWindow({300u, 300u}, "Tic-tac-toe");
+    auto window = sf::RenderWindow(sf::VideoMode({300u, 300u}), "Tic-tac-toe");
     window.setFramerateLimit(10);
 
     //---------------------
@@ -57,8 +57,8 @@ int main()
     zwyciezca_text.setStyle(sf::Text::Bold);
     // #####@@@@@@@@@@@@@@@@@@@@@@
     // MAIN LOOP
-    sf::Event event;
-    menu_loop(window,event);
+
+    menu_loop(window);
 
     //game_loop(window, event);
     

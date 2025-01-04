@@ -14,6 +14,9 @@ extern sf::Sprite the_x_sp;
 void menu_loop(sf::RenderWindow &_okno);
 void game_loop(sf::RenderWindow &_okno);
 void winner_loop(sf::RenderWindow &_okno);
+
+
+
 void menu_loop(sf::RenderWindow &_okno)
 {
     // menu initialization here
@@ -42,8 +45,8 @@ void menu_loop(sf::RenderWindow &_okno)
                     if (start_button.getGlobalBounds().contains(relative_mouse_pos(_okno)))
                     {
                         // start game loop
-                        game_loop(_okno, _event);
-                        winner_loop(_okno, _event);
+                        game_loop(_okno);
+                        winner_loop(_okno);
                         // cleanup here
                         zwyciezca_text.setString("");
                     }
@@ -120,7 +123,7 @@ void game_loop(sf::RenderWindow &_okno)
     }
 }
 
-void winner_loop(sf::RenderWindow &_okno, const std::optional<sf::Event> &_event)
+void winner_loop(sf::RenderWindow &_okno)
 {
     while (_okno.isOpen())
     {
