@@ -6,15 +6,15 @@
 #include"states.hpp"
 
 sf::Font font;
-sf::Text zwyciezca_text;
+sf::Text zwyciezca_text(font);
 sf::Texture board_texture; // tekstura boardu
-sf::Sprite board_sp;
+sf::Sprite board_sp(board_texture);
 //---------------------
 sf::Texture the_o;
-sf::Sprite the_o_sp;
+sf::Sprite the_o_sp(the_o);
 //---------------------
 sf::Texture the_x;
-sf::Sprite the_x_sp;
+sf::Sprite the_x_sp(the_x);
 int main()
 {
     //---------------------
@@ -45,7 +45,7 @@ int main()
         the_x_sp.setTexture(the_x);
     //---------------------
     // load font
-    if (!font.loadFromFile("arial.ttf"))
+    if (!font.openFromFile("arial.ttf"))
     {
         // error...
     }

@@ -11,18 +11,17 @@ extern sf::Sprite the_o_sp;
 //---------------------
 extern sf::Texture the_x;
 extern sf::Sprite the_x_sp;
-void menu_loop(sf::RenderWindow &_okno, sf::Event &_event);
-void game_loop(sf::RenderWindow &_okno, sf::Event &_event);
-void winner_loop(sf::RenderWindow &_okno, sf::Event &_event);
-void menu_loop(sf::RenderWindow &_okno, sf::Event &_event)
+void menu_loop(sf::RenderWindow &_okno);
+void game_loop(sf::RenderWindow &_okno);
+void winner_loop(sf::RenderWindow &_okno);
+void menu_loop(sf::RenderWindow &_okno)
 {
     // menu initialization here
-    sf::RectangleShape start_button(sf::Vector2f(200, 100));
+    sf::RectangleShape start_button({200,100});
     start_button.setFillColor(sf::Color::Green);
     start_button.setOrigin({100,50});
     start_button.setPosition({150, 150});
-    sf::Text start_text;
-    start_text.setFont(font);
+    sf::Text start_text(font);
     start_text.setFillColor(sf::Color::Blue);
     start_text.setStyle(sf::Text::Bold);
     start_text.setPosition(start_button.getPosition());
@@ -30,15 +29,15 @@ void menu_loop(sf::RenderWindow &_okno, sf::Event &_event)
     start_text.setCharacterSize(24);
     while (_okno.isOpen())
     {
-        while (_okno.pollEvent(_event))
+        while (const std::optional _event = _okno.pollEvent())
         {
-            if (_event.type == sf::Event::Closed)
+            if (_event->is<sf::Event::Closed>())
             {
                 _okno.close();
             }
-            if (_event.type == sf::Event::MouseButtonPressed)
+            if (_event->is<sf::Event::MouseButtonPressed>())
             {
-                if (_event.mouseButton.button == sf::Mouse::Left)
+                if (_event->getIf<sf::Event::MouseLeft>())
                 {
                     if (start_button.getGlobalBounds().contains(relative_mouse_pos(_okno)))
                     {
@@ -59,7 +58,7 @@ void menu_loop(sf::RenderWindow &_okno, sf::Event &_event)
     }
 }
 
-void game_loop(sf::RenderWindow &_okno, sf::Event &_event)
+void game_loop(sf::RenderWindow &_okno)
 {
     // game loop initialization here
     std::vector<sf::Sprite> sprites_to_draw;
@@ -74,29 +73,29 @@ void game_loop(sf::RenderWindow &_okno, sf::Event &_event)
     int tura = 0;
     while (_okno.isOpen())
     {
-        while (_okno.pollEvent(_event)) // poll events
+        while (const std::optional _event = _okno.pollEvent()) // poll events
         {
-            if (_event.type == sf::Event::Closed)
+            if (_event->is<sf::Event::Closed>())
             {
                 _okno.close();
             }
             //-----------------
-            if (_event.type == sf::Event::MouseButtonPressed)
+            if (_event->is<sf::Event::MouseButtonPressed>())
             {
-                if (_event.mouseButton.button == sf::Mouse::Left)
+                if (_event->getIf<sf::Event::MouseLeft>())
                 {
                     sf::Vector2f mouse_pos = relative_mouse_pos(_okno);
                     int wybor = get_1D_index(mouse_pos.x / 100, mouse_pos.y / 100); // translate mouse cord into 1D array 0-8
                     if (tura % 2)
                     {
 
-                        the_o_sp.setPosition(get_2D_index(wybor).x * 100, get_2D_index(wybor).y * 100);
+                        the_o_sp.setPosition({get_2D_index(wybor).x * 100.f, get_2D_index(wybor).y * 100.f});
                         sprites_to_draw.push_back(the_o_sp);
                         // kolkos
                     }
                     else
                     {
-                        the_x_sp.setPosition(get_2D_index(wybor).x * 100, get_2D_index(wybor).y * 100);
+                        the_x_sp.setPosition({get_2D_index(wybor).x * 100.f, get_2D_index(wybor).y * 100.f});
                         sprites_to_draw.push_back(the_x_sp);
                         // krzyzyks
                     }
@@ -121,19 +120,19 @@ void game_loop(sf::RenderWindow &_okno, sf::Event &_event)
     }
 }
 
-void winner_loop(sf::RenderWindow &_okno, sf::Event &_event)
+void winner_loop(sf::RenderWindow &_okno, const std::optional<sf::Event> &_event)
 {
     while (_okno.isOpen())
     {
-        while (_okno.pollEvent(_event))
+        while (const std::optional _event = _okno.pollEvent())
         {
-            if (_event.type == sf::Event::Closed)
+            if (_event->is<sf::Event::Closed>())
             {
                 _okno.close();
             }
-            if (_event.type == sf::Event::MouseButtonPressed)
+            if (_event->is<sf::Event::MouseButtonPressed>())
             {
-                if (_event.mouseButton.button == sf::Mouse::Left)
+                if (_event->getIf<sf::Event::MouseLeft>())
                 {
                     return;
                 }
