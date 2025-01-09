@@ -1,9 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
-#include"logic.hpp"
-#include"utility.hpp"
-#include"states.hpp"
+#include <cassert>
+#include "logic.hpp"
+#include "utility.hpp"
+#include "states.hpp"
 
 sf::Font font;
 sf::Text zwyciezca_text(font);
@@ -26,12 +27,14 @@ int main()
     //---------------------
     if (!board_texture.loadFromFile("board.png"))
     {
+        assert(false);
     }
     else // ladowanie boarda
-    board_sp.setTexture(board_texture);
+        board_sp.setTexture(board_texture);
     //---------------------
     if (!the_o.loadFromFile("o.png"))
     {
+        assert(false);
         // error...
     }
     else
@@ -47,6 +50,7 @@ int main()
     // load font
     if (!font.openFromFile("arial.ttf"))
     {
+        assert(false);
         // error...
     }
     //---------------
@@ -60,7 +64,6 @@ int main()
 
     menu_loop(window);
 
-    //game_loop(window, event);
-    
+    // game_loop(window);
     return 0;
 }

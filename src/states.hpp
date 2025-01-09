@@ -15,14 +15,12 @@ void menu_loop(sf::RenderWindow &_okno);
 void game_loop(sf::RenderWindow &_okno);
 void winner_loop(sf::RenderWindow &_okno);
 
-
-
 void menu_loop(sf::RenderWindow &_okno)
 {
     // menu initialization here
-    sf::RectangleShape start_button({200,100});
+    sf::RectangleShape start_button({200, 100});
     start_button.setFillColor(sf::Color::Green);
-    start_button.setOrigin({100,50});
+    start_button.setOrigin({100, 50});
     start_button.setPosition({150, 150});
     sf::Text start_text(font);
     start_text.setFillColor(sf::Color::Blue);
@@ -40,13 +38,14 @@ void menu_loop(sf::RenderWindow &_okno)
             }
             if (_event->is<sf::Event::MouseButtonPressed>())
             {
-                if (_event->getIf<sf::Event::MouseLeft>())
+                game_loop(_okno);
+                if (_event->is<sf::Event::MouseLeft>())
                 {
+
                     if (start_button.getGlobalBounds().contains(relative_mouse_pos(_okno)))
                     {
                         // start game loop
-                        game_loop(_okno);
-                        winner_loop(_okno);
+                        // game_loop(_okno);
                         // cleanup here
                         zwyciezca_text.setString("");
                     }
@@ -65,6 +64,7 @@ void game_loop(sf::RenderWindow &_okno)
 {
     // game loop initialization here
     std::vector<sf::Sprite> sprites_to_draw;
+    sf::CircleShape circle_shape(50.f);
     bool EXIT_FLAG = false;
     sprites_to_draw.push_back(board_sp);
     _okno.clear();
@@ -105,7 +105,7 @@ void game_loop(sf::RenderWindow &_okno)
                     if (logika(wybor, board, tura))
                     {
                         EXIT_FLAG = true;
-                         // EXIT GAME LOOP HERE
+                        // EXIT GAME LOOP HERE
                     }
                     tura++;
                     draw_board(board);
@@ -119,7 +119,8 @@ void game_loop(sf::RenderWindow &_okno)
         }
         _okno.draw(zwyciezca_text);
         _okno.display();
-        if(EXIT_FLAG) return;
+        if (EXIT_FLAG)
+            return;
     }
 }
 

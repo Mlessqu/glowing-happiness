@@ -3,8 +3,8 @@
 extern sf::Text zwyciezca_text;
 bool logika(int _wybor, int *_board, int _tura);
 bool check_winner(int *_board);
-void menu_loop(sf::RenderWindow& _okno, sf::Event& _event);
-void game_loop(sf::RenderWindow& _okno, sf::Event& _event);
+void menu_loop(sf::RenderWindow& _okno);
+void game_loop(sf::RenderWindow& _okno);
 
 
 bool logika(int _wybor, int *_board, int _tura)
