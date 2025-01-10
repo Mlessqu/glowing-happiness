@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+extern sf::Font font;
 class Button : public sf::Drawable
 {
 
@@ -9,17 +10,16 @@ public:
     Button(sf::Vector2f _size, sf::Vector2f _pos, std::string _caption);
 
 private:
-    sf::Font font;
     sf::Text text;
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override
     {
         target.draw(button_body);
-        // target.draw(text);
+        target.draw(text);
     }
 };
 
-Button::Button(sf::Vector2f _size, sf::Vector2f _pos, std::string _caption) : font("arial.ttf"), text(font)
+Button::Button(sf::Vector2f _size, sf::Vector2f _pos, std::string _caption) : text(font)
 {
     // font.openFromFile("arial.ttf");
 

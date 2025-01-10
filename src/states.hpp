@@ -24,27 +24,9 @@ void network_loop(sf::RenderWindow &_okno);
 void menu_loop(sf::RenderWindow &_okno)
 {
     // menu initialization here
-    /*sf::RectangleShape start_button({150, 50});
-    start_button.setFillColor(sf::Color::Green);
-    // start_button.setOrigin({100, 50});
-    start_button.setPosition({150, 50});
-    sf::Text start_text(font);
-    start_text.setFillColor(sf::Color::Blue);
-    start_text.setStyle(sf::Text::Bold);
-    start_text.setPosition(start_button.getPosition());
-    start_text.setString("CO-OP");
-    start_text.setCharacterSize(24); */
-    Button start_button({150, 50}, {0, 50}, "Mleko");
-    sf::RectangleShape vs_ai_button({150, 50});
-    vs_ai_button.setFillColor(sf::Color::Green);
-    // vs_ai_button.setOrigin({100, 50});
-    vs_ai_button.setPosition({150, 150});
-    sf::Text vs_ai_text(font);
-    vs_ai_text.setFillColor(sf::Color::Blue);
-    vs_ai_text.setStyle(sf::Text::Bold);
-    vs_ai_text.setPosition(vs_ai_button.getPosition());
-    vs_ai_text.setString("VS AI");
-    vs_ai_text.setCharacterSize(24);
+
+    Button start_button({150, 50}, {150, 50}, "CO OP");
+    Button vs_ai_button({150, 50}, {150, 150}, "VS AI");
     // loop proper
     while (_okno.isOpen())
     {
@@ -66,7 +48,7 @@ void menu_loop(sf::RenderWindow &_okno)
                         // cleanup here
                         zwyciezca_text.setString("");
                     }
-                    if (vs_ai_button.getGlobalBounds().contains(relative_mouse_pos(_okno)))
+                    if (vs_ai_button.button_body.getGlobalBounds().contains(relative_mouse_pos(_okno)))
                     {
                         // start  ai game loop
                         ai_game_loop(_okno);
@@ -78,9 +60,7 @@ void menu_loop(sf::RenderWindow &_okno)
         }
         _okno.clear();
         _okno.draw(start_button);
-        //_okno.draw(start_text);
         _okno.draw(vs_ai_button);
-        _okno.draw(vs_ai_text);
         _okno.draw(zwyciezca_text);
         _okno.display();
     }
