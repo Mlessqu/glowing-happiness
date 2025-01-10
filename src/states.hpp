@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "utility.hpp"
 extern sf::Font font;
 extern sf::Text zwyciezca_text;
@@ -36,16 +37,15 @@ void menu_loop(sf::RenderWindow &_okno)
             {
                 _okno.close();
             }
-            if (_event->is<sf::Event::MouseButtonPressed>())
+            if (const auto *mouseButtonPressed = _event->getIf<sf::Event::MouseButtonPressed>())
             {
-                game_loop(_okno);
-                if (_event->is<sf::Event::MouseLeft>())
-                {
 
+                if (mouseButtonPressed->button == sf::Mouse::Button::Left)
+                {
                     if (start_button.getGlobalBounds().contains(relative_mouse_pos(_okno)))
                     {
                         // start game loop
-                        // game_loop(_okno);
+                        game_loop(_okno);
                         // cleanup here
                         zwyciezca_text.setString("");
                     }
@@ -64,7 +64,6 @@ void game_loop(sf::RenderWindow &_okno)
 {
     // game loop initialization here
     std::vector<sf::Sprite> sprites_to_draw;
-    sf::CircleShape circle_shape(50.f);
     bool EXIT_FLAG = false;
     sprites_to_draw.push_back(board_sp);
     _okno.clear();
@@ -83,9 +82,9 @@ void game_loop(sf::RenderWindow &_okno)
                 _okno.close();
             }
             //-----------------
-            if (_event->is<sf::Event::MouseButtonPressed>())
+            if (const auto *mouseButtonPressed = _event->getIf<sf::Event::MouseButtonPressed>())
             {
-                if (_event->getIf<sf::Event::MouseLeft>())
+                if (mouseButtonPressed->button == sf::Mouse::Button::Left)
                 {
                     sf::Vector2f mouse_pos = relative_mouse_pos(_okno);
                     int wybor = get_1D_index(mouse_pos.x / 100, mouse_pos.y / 100); // translate mouse cord into 1D array 0-8
@@ -105,14 +104,16 @@ void game_loop(sf::RenderWindow &_okno)
                     if (logika(wybor, board, tura))
                     {
                         EXIT_FLAG = true;
-                        // EXIT GAME LOOP HERE
+                        // winner_loop(_okno);
+                        //  EXIT GAME LOOP HERE
                     }
                     tura++;
-                    draw_board(board);
+                    // draw_board(board);
                 }
             }
         }
-        _okno.clear();
+        _okno.clear(sf::Color::Green);
+        _okno.draw(board_sp);
         for (auto itr = sprites_to_draw.begin(); itr != sprites_to_draw.end(); itr++) // we loop over things to draw here
         {
             _okno.draw(*itr);
@@ -120,7 +121,10 @@ void game_loop(sf::RenderWindow &_okno)
         _okno.draw(zwyciezca_text);
         _okno.display();
         if (EXIT_FLAG)
+        {
+            winner_loop(_okno);
             return;
+        }
     }
 }
 
@@ -134,11 +138,10 @@ void winner_loop(sf::RenderWindow &_okno)
             {
                 _okno.close();
             }
-            if (_event->is<sf::Event::MouseButtonPressed>())
+            if (const auto *mouseButtonPressed = _event->getIf<sf::Event::MouseButtonPressed>())
             {
-                if (_event->getIf<sf::Event::MouseLeft>())
+                if (mouseButtonPressed->button == sf::Mouse::Button::Left)
                 {
-                    return;
                 }
             }
         }

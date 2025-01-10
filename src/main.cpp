@@ -8,13 +8,13 @@
 
 sf::Font font;
 sf::Text zwyciezca_text(font);
-sf::Texture board_texture; // tekstura boardu
+sf::Texture board_texture("board.png"); // tekstura boardu
 sf::Sprite board_sp(board_texture);
 //---------------------
-sf::Texture the_o;
+sf::Texture the_o("o.png");
 sf::Sprite the_o_sp(the_o);
 //---------------------
-sf::Texture the_x;
+sf::Texture the_x("x.png");
 sf::Sprite the_x_sp(the_x);
 int main()
 {
@@ -28,6 +28,7 @@ int main()
     if (!board_texture.loadFromFile("board.png"))
     {
         assert(false);
+        std::cout << "Nie zaladowano board.png";
     }
     else // ladowanie boarda
         board_sp.setTexture(board_texture);
@@ -35,6 +36,7 @@ int main()
     if (!the_o.loadFromFile("o.png"))
     {
         assert(false);
+        std::cout << "Nie zaladowano o.png";
         // error...
     }
     else
@@ -42,7 +44,7 @@ int main()
     //---------------------
     if (!the_x.loadFromFile("x.png"))
     {
-        // error...
+        std::cout << "Nie zaladowano x.png";
     }
     else
         the_x_sp.setTexture(the_x);
@@ -51,7 +53,7 @@ int main()
     if (!font.openFromFile("arial.ttf"))
     {
         assert(false);
-        // error...
+        std::cout << "Nie zaladowano arial.ttf";
     }
     //---------------
     // select the font
