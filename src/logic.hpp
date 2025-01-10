@@ -1,13 +1,14 @@
 #pragma once
-#include<iostream>
+#include <iostream>
 extern sf::Text zwyciezca_text;
-bool logika(int _wybor, int *_board, int _tura);
+bool logika_co_op(int _wybor, int *_board, int _tura);
 bool check_winner(int *_board);
-void menu_loop(sf::RenderWindow& _okno);
-void game_loop(sf::RenderWindow& _okno);
+void menu_loop(sf::RenderWindow &_okno);
+void co_op_game_loop(sf::RenderWindow &_okno);
+bool logika_ai(int _wybor, int *_board, int _tura);
 
-
-bool logika(int _wybor, int *_board, int _tura)
+//-0-------
+bool logika_co_op(int _wybor, int *_board, int _tura)
 {
     if (!(_tura % 2)) // even turn for xes
     {
@@ -32,7 +33,43 @@ bool logika(int _wybor, int *_board, int _tura)
             zwyciezca_text.setString("Kolko wygralo!");
         }
         return true;
-    }else if(_tura>7)
+    }
+    else if (_tura > 7)
+    {
+        std::cout << "Remis!" << std::endl;
+        zwyciezca_text.setString("Remis!");
+        return true;
+    }
+    return false;
+}
+
+bool logika_ai(int _wybor, int *_board, int _tura)
+{
+    if (!(_tura % 2)) // even turn for xes
+    {
+        _board[_wybor] = 1; // gracz
+    }
+    else // odd turn for o's
+    {
+        _board[_wybor] = 2; // AI
+    }
+    if (check_winner(_board)) // we check for the winner afterwards
+    {
+
+        std::cout << "Gratulujemy wygral:";
+        if (!(_tura % 2))
+        {
+            std::cout << "Krzyzyk";
+            zwyciezca_text.setString("Krzyzyk wygral!");
+        }
+        else
+        {
+            std::cout << "Kolko";
+            zwyciezca_text.setString("Kolko wygralo!");
+        }
+        return true;
+    }
+    else if (_tura > 7)
     {
         std::cout << "Remis!" << std::endl;
         zwyciezca_text.setString("Remis!");

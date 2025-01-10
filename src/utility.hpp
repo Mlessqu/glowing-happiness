@@ -1,14 +1,14 @@
 #pragma once
-#include<SFML/Graphics.hpp>
-#include<iostream>
+#include <SFML/Graphics.hpp>
+#include <iostream>
 char draw_sign(int _val);
 void draw_line(int _ile);
 void draw_board(int *_board);
-sf::Vector2f relative_mouse_pos(sf::RenderWindow& _okno);
+sf::Vector2f relative_mouse_pos(sf::RenderWindow &_okno);
 int get_1D_index(int _x, int _y);
 sf::Vector2f get_2D_index(int _x);
 
-sf::Vector2f relative_mouse_pos(sf::RenderWindow& _okno)
+sf::Vector2f relative_mouse_pos(sf::RenderWindow &_okno)
 {
     sf::Vector2i pixelPos = sf::Mouse::getPosition(_okno);
     sf::Vector2f worldPos = _okno.mapPixelToCoords(pixelPos);
