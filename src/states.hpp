@@ -4,6 +4,7 @@
 #include <bits/stdc++.h>
 #include "utility.hpp"
 #include "ai.hpp"
+#include "button.hpp"
 extern sf::Font font;
 extern sf::Text zwyciezca_text;
 extern sf::Texture board_texture; // tekstura boardu
@@ -23,7 +24,7 @@ void network_loop(sf::RenderWindow &_okno);
 void menu_loop(sf::RenderWindow &_okno)
 {
     // menu initialization here
-    sf::RectangleShape start_button({150, 50});
+    /*sf::RectangleShape start_button({150, 50});
     start_button.setFillColor(sf::Color::Green);
     // start_button.setOrigin({100, 50});
     start_button.setPosition({150, 50});
@@ -32,7 +33,8 @@ void menu_loop(sf::RenderWindow &_okno)
     start_text.setStyle(sf::Text::Bold);
     start_text.setPosition(start_button.getPosition());
     start_text.setString("CO-OP");
-    start_text.setCharacterSize(24);
+    start_text.setCharacterSize(24); */
+    Button start_button({150, 50}, {0, 50}, "Mleko");
     sf::RectangleShape vs_ai_button({150, 50});
     vs_ai_button.setFillColor(sf::Color::Green);
     // vs_ai_button.setOrigin({100, 50});
@@ -57,7 +59,7 @@ void menu_loop(sf::RenderWindow &_okno)
 
                 if (mouseButtonPressed->button == sf::Mouse::Button::Left)
                 {
-                    if (start_button.getGlobalBounds().contains(relative_mouse_pos(_okno)))
+                    if (start_button.button_body.getGlobalBounds().contains(relative_mouse_pos(_okno)))
                     {
                         // start game loop
                         co_op_game_loop(_okno);
@@ -76,7 +78,7 @@ void menu_loop(sf::RenderWindow &_okno)
         }
         _okno.clear();
         _okno.draw(start_button);
-        _okno.draw(start_text);
+        //_okno.draw(start_text);
         _okno.draw(vs_ai_button);
         _okno.draw(vs_ai_text);
         _okno.draw(zwyciezca_text);
