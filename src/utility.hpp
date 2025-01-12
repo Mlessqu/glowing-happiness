@@ -79,7 +79,7 @@ sf::Vector2f get_2D_index(int _len)
 inline int czyja_tura(int _tura)
 {
     if (_tura % 2)
-        return 2;
+        return 2; // kolko
     else
-        return 1;
+        return 1; // krzyzyk
 }

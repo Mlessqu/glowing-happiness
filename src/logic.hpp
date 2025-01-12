@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "utility.hpp"
 extern sf::Text zwyciezca_text;
 bool logika_co_op(int _wybor, int *_board, int _tura);
 bool check_winner(int *_board);
@@ -10,14 +11,8 @@ bool logika_ai(int _wybor, int *_board, int _tura);
 //-0-------
 bool logika_co_op(int _wybor, int *_board, int _tura)
 {
-    if (!(_tura % 2)) // even turn for xes
-    {
-        _board[_wybor] = 1;
-    }
-    else // odd turn for o's
-    {
-        _board[_wybor] = 2;
-    }
+    _board[_wybor] = czyja_tura(_tura);
+
     if (check_winner(_board)) // we check for the winner afterwards
     {
 
@@ -45,7 +40,7 @@ bool logika_co_op(int _wybor, int *_board, int _tura)
 
 bool logika_ai(int _wybor, int *_board, int _tura)
 {
-    if (!(_tura % 2)) // even turn for xes
+    if (czyja_tura(_tura) == 1) // even turn for xes
     {
         _board[_wybor] = 1; // gracz
     }

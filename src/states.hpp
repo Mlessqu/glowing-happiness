@@ -143,14 +143,17 @@ void ai_game_loop(sf::RenderWindow &_okno)
     // game loop initialization here
     std::vector<sf::Sprite> sprites_to_draw;
     bool EXIT_FLAG = false;
+    int board[9] =
+        {
+            0, 0, 0,
+            0, 0, 0,
+            0, 0, 0};
+    int tura = 0;
     sprites_to_draw.push_back(board_sp);
     _okno.clear();
     _okno.draw(board_sp);
     _okno.display();
-    int board[9] = {0, 0, 0, // tablica
-                    0, 0, 0,
-                    0, 0, 0};
-    int tura = 0;
+
     while (_okno.isOpen())
     {
         while (const std::optional _event = _okno.pollEvent()) // poll events
@@ -185,11 +188,9 @@ void ai_game_loop(sf::RenderWindow &_okno)
                         sprites_to_draw.push_back(the_x_sp);
                         // krzyzyks
                     }
-                    if (logika_ai(wybor, board, tura))
+                    if (logika_co_op(wybor, board, tura))
                     {
                         EXIT_FLAG = true;
-                        // winner_loop(_okno);
-                        //  EXIT GAME LOOP HERE
                     }
                     tura++;
                     // draw_board(board);
@@ -208,6 +209,7 @@ void ai_game_loop(sf::RenderWindow &_okno)
         {
             winner_loop(_okno);
             return; // exit function, effectively exit state
+            // we exit it only here!
         }
     }
 }
