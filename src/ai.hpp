@@ -2,8 +2,11 @@
 #include "logic.hpp"
 int ai_agent(int *_board)
 {
-    int ruch = 1;
-    return ruch;
+    for (int i = 0; i < 9; i++)
+    {
+        if (_board[i] == 0)
+            return i;
+    }
 }
 
 int calculate_score_for_move(int *_board, int move, int _tura)
