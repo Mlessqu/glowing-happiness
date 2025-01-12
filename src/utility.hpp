@@ -75,3 +75,11 @@ sf::Vector2f get_2D_index(int _len)
     int _x = _len % 3;
     return sf::Vector2f(_x, _y);
 }
+
+inline int czyja_tura(int _tura)
+{
+    if (_tura % 2)
+        return 2;
+    else
+        return 1;
+}

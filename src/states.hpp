@@ -94,31 +94,30 @@ void co_op_game_loop(sf::RenderWindow &_okno)
                 {
                     sf::Vector2f mouse_pos = relative_mouse_pos(_okno);
                     int wybor = get_1D_index(mouse_pos.x / 100, mouse_pos.y / 100); // translate mouse cord into 1D array 0-8
-                    if (board[wybor] != 0)
+                    if (board[wybor] == 0)
                     {
-                        break;
-                    }
-                    if (tura % 2)
-                    {
+                        if (czyja_tura(tura) == 2)
+                        {
 
-                        the_o_sp.setPosition({get_2D_index(wybor).x * 100.f, get_2D_index(wybor).y * 100.f});
-                        sprites_to_draw.push_back(the_o_sp);
-                        // kolkos
-                    }
-                    else
-                    {
+                            the_o_sp.setPosition({get_2D_index(wybor).x * 100.f, get_2D_index(wybor).y * 100.f});
+                            sprites_to_draw.push_back(the_o_sp);
+                            // kolkos
+                        }
+                        else
+                        {
 
-                        the_x_sp.setPosition({get_2D_index(wybor).x * 100.f, get_2D_index(wybor).y * 100.f});
-                        sprites_to_draw.push_back(the_x_sp);
-                        // krzyzyks
+                            the_x_sp.setPosition({get_2D_index(wybor).x * 100.f, get_2D_index(wybor).y * 100.f});
+                            sprites_to_draw.push_back(the_x_sp);
+                            // krzyzyks
+                        }
+                        if (logika_co_op(wybor, board, tura))
+                        {
+                            EXIT_FLAG = true;
+                            // winner_loop(_okno);
+                            //  EXIT GAME LOOP HERE
+                        }
+                        tura++;
                     }
-                    if (logika_co_op(wybor, board, tura))
-                    {
-                        EXIT_FLAG = true;
-                        // winner_loop(_okno);
-                        //  EXIT GAME LOOP HERE
-                    }
-                    tura++;
                     // draw_board(board);
                 }
             }
@@ -171,7 +170,7 @@ void ai_game_loop(sf::RenderWindow &_okno)
                     {
                         break;
                     }
-                    if (tura % 2)
+                    if (czyja_tura(tura) == 2)
                     {
                         // tutaj musi sie znajdowac logika AI
                         wybor = ai_agent(board);
@@ -208,7 +207,7 @@ void ai_game_loop(sf::RenderWindow &_okno)
         if (EXIT_FLAG)
         {
             winner_loop(_okno);
-            return;
+            return; // exit function, effectively exit state
         }
     }
 }
