@@ -12,5 +12,5 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp src/logic.hpp src/states.hpp src/utility.hpp src/button.hpp)
+add_executable(main src/main.cpp src/logic.hpp src/states.hpp src/utility.hpp src/button.hpp src/resources.hpp)
 target_link_libraries(main PRIVATE SFML::Graphics)

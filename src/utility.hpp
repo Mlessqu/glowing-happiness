@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <string>
 char draw_sign(int _val);
 void draw_line(int _ile);
 void draw_board(int *_board);
@@ -76,10 +77,10 @@ sf::Vector2f get_2D_index(int _len)
     return sf::Vector2f(_x, _y);
 }
 
-inline int czyja_tura(int _tura)
+std::string debug_string(int _tura, int _wybor)
 {
-    if (_tura % 2)
-        return 2; // kolko
-    else
-        return 1; // krzyzyk
+    std::string str_tura = std::to_string(_tura);
+    std::string str_wybor = std::to_string(_wybor);
+    std::string final = "Tura: " + str_tura + " Wybor:" + str_wybor;
+    return final;
 }

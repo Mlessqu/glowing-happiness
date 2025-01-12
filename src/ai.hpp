@@ -1,21 +1,40 @@
 #pragma once
+#include <vector>
 #include "logic.hpp"
-int ai_agent(int *_board)
+#include "resources.hpp"
+int ai_agent(Msq::GameState *_game_state)
 {
+    std::vector<Msq::GameState> game_states;
+    Msq::GameState temp = {};
     for (int i = 0; i < 9; i++)
     {
-        if (_board[i] == 0)
+        if (_game_state->board[i] != 0)
+            continue;
+        else
             return i;
     }
+    return 1;
 }
 
-int calculate_score_for_move(int *_board, int move, int _tura)
+int calculate_score_for_move(Msq::GameState *_game_state)
 {
-    int copy_board[9];
-    for (int i = 0; i < 9; i++)
+    if (check_winner(_game_state->board)) // we check for the winner afterwards
     {
-        copy_board[i] = _board[i];
-    }
 
-    return 1;
+        if (czyja_tura(_game_state) == 1) // krzyzyk
+        {
+            return -10;
+        }
+        else // kolko
+        {
+            return 10;
+        }
+    }
+    else if (_game_state->tura > 7)
+    {
+        std::cout << "Remis!" << std::endl;
+        zwyciezca_text.setString("Remis!");
+        return 0;
+    }
+    return -1;
 }

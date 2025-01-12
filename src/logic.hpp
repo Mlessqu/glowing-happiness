@@ -1,23 +1,21 @@
 #pragma once
 #include <iostream>
-#include "utility.hpp"
+#include "resources.hpp"
 extern sf::Text zwyciezca_text;
-bool logika_co_op(int _wybor, int *_board, int _tura);
+bool is_end(Msq::GameState *_game_state);
 bool check_winner(int *_board);
 void menu_loop(sf::RenderWindow &_okno);
 void co_op_game_loop(sf::RenderWindow &_okno);
 bool logika_ai(int _wybor, int *_board, int _tura);
 
 //-0-------
-bool logika_co_op(int _wybor, int *_board, int _tura)
+bool is_end(Msq::GameState *_game_state)
 {
-    _board[_wybor] = czyja_tura(_tura);
 
-    if (check_winner(_board)) // we check for the winner afterwards
+    if (check_winner(_game_state->board)) // we check for the winner afterwards
     {
-
         std::cout << "Gratulujemy wygral:";
-        if (!(_tura % 2))
+        if (Msq::czyja_tura(_game_state) == 1)
         {
             std::cout << "Krzyzyk";
             zwyciezca_text.setString("Krzyzyk wygral!");
@@ -29,42 +27,7 @@ bool logika_co_op(int _wybor, int *_board, int _tura)
         }
         return true;
     }
-    else if (_tura > 7)
-    {
-        std::cout << "Remis!" << std::endl;
-        zwyciezca_text.setString("Remis!");
-        return true;
-    }
-    return false;
-}
-
-bool logika_ai(int _wybor, int *_board, int _tura)
-{
-    if (czyja_tura(_tura) == 1) // even turn for xes
-    {
-        _board[_wybor] = 1; // gracz
-    }
-    else // odd turn for o's
-    {
-        _board[_wybor] = 2; // AI
-    }
-    if (check_winner(_board)) // we check for the winner afterwards
-    {
-
-        std::cout << "Gratulujemy wygral:";
-        if (!(_tura % 2))
-        {
-            std::cout << "Krzyzyk";
-            zwyciezca_text.setString("Krzyzyk wygral!");
-        }
-        else
-        {
-            std::cout << "Kolko";
-            zwyciezca_text.setString("Kolko wygralo!");
-        }
-        return true;
-    }
-    else if (_tura > 7)
+    else if (_game_state->tura > 7)
     {
         std::cout << "Remis!" << std::endl;
         zwyciezca_text.setString("Remis!");
