@@ -2,20 +2,43 @@
 #include <vector>
 #include "logic.hpp"
 #include "resources.hpp"
-int ai_agent(Msq::GameState *_game_state)
+int min_max(Msq::GameState *_game_state);
+
+int ai_move(Msq::GameState *_game_state)
 {
     std::vector<Msq::GameState> game_states;
     Msq::GameState temp = {};
+
     for (int i = 0; i < 9; i++)
     {
         if (_game_state->board[i] != 0)
             continue;
         else
-            return i;
+            temp.wybor = i;
+        Msq::make_move(temp);
+        if (Msq::is_end(temp))
+        {
+        }
+        game_states.push_back(temp);
     }
     return 1;
 }
+int min_max(Msq::GameState *_game_state)
+{
 
+    for (int i = 0; i < 9; i++)
+    {
+        if (_game_state->board[i] != 0)
+            continue;
+        else
+            moves.push_back(i); // available moves
+    }
+
+    if (Msq::check_winner(_game_state))
+    {
+        return _game_state->score;
+    }
+}
 int calculate_score_for_move(Msq::GameState *_game_state)
 {
     if (Msq::check_winner(_game_state->board)) // we check for the winner afterwards
@@ -23,18 +46,19 @@ int calculate_score_for_move(Msq::GameState *_game_state)
 
         if (czyja_tura(_game_state) == 1) // krzyzyk
         {
-            return -10;
+            score = score - 10;
+            return score;
         }
-        else // kolko
+        if (czyja_tura(_game_state) == 2)
         {
-            return 10;
+            score = score + 10;
+            return score;
         }
     }
     else if (_game_state->tura > 7)
     {
         std::cout << "Remis!" << std::endl;
         zwyciezca_text.setString("Remis!");
-        return 0;
+        return score;
     }
-    return -1;
 }

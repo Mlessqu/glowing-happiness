@@ -12,6 +12,7 @@ namespace Msq
         int tura = 0;
         int wybor = 0;
         bool exit_flag = false;
+        int score = 0;
     };
     bool is_end(GameState *_game_state);
     int czyja_tura(GameState *_game_state);
