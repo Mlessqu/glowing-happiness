@@ -86,6 +86,7 @@ void co_op_game_loop(sf::RenderWindow &_okno)
     {
         while (const std::optional _event = _okno.pollEvent()) // poll events
         {
+            debug_text.setString(debug_string(original_game_state.tura, original_game_state.wybor));
             if (_event->is<sf::Event::Closed>())
             {
                 _okno.close();
@@ -115,7 +116,6 @@ void co_op_game_loop(sf::RenderWindow &_okno)
                             // krzyzyks
                         }
                         Msq::make_move(&original_game_state);
-                        debug_text.setString(debug_string(original_game_state.tura, original_game_state.wybor));
                     }
                     // draw_board(board);
                 }
@@ -157,6 +157,7 @@ void ai_game_loop(sf::RenderWindow &_okno)
     {
         while (const std::optional _event = _okno.pollEvent()) // poll events
         {
+            debug_text.setString(debug_string(original_game_state.tura, original_game_state.wybor));
             if (_event->is<sf::Event::Closed>())
             {
                 _okno.close();
@@ -168,37 +169,32 @@ void ai_game_loop(sf::RenderWindow &_okno)
                 {
                     sf::Vector2f mouse_pos = relative_mouse_pos(_okno);
                     original_game_state.wybor = get_1D_index(mouse_pos.x / 100, mouse_pos.y / 100); // translate mouse cord into 1D array 0-8, division by 100, because it is 100pixels wide and high
-                    if (Msq::is_valid_move(&original_game_state))
+                    if (Msq::czyja_tura(&original_game_state) == 1)
                     {
-                        if (Msq::czyja_tura(&original_game_state) == 1)
-                        {
-                            //----------------------------------------------------
-                            the_x_sp.setPosition({get_2D_index(original_game_state.wybor).x * 100.f, get_2D_index(original_game_state.wybor).y * 100.f});
-                            sprites_to_draw.push_back(the_x_sp);
-                            //--------------------------------
-                        }
+                        //----------------------------------------------------
+                        the_x_sp.setPosition({get_2D_index(original_game_state.wybor).x * 100.f, get_2D_index(original_game_state.wybor).y * 100.f});
+                        sprites_to_draw.push_back(the_x_sp);
+                        //--------------------------------
                         Msq::make_move(&original_game_state);
-                        if (Msq::is_end(&original_game_state))
+                        if (original_game_state.exit_flag == true)
                         {
-                            break; // tu sie cos pierdoli
+                            break;
                         }
                     }
+
                     // krzyzyks
-                    debug_text.setString(debug_string(original_game_state.tura, original_game_state.wybor));
-                    original_game_state.wybor = ai_agent(&original_game_state);
-                    if (Msq::is_valid_move(&original_game_state))
+
+                    if (Msq::czyja_tura(&original_game_state) == 2)
                     {
-                        if (Msq::czyja_tura(&original_game_state) == 2)
+                        original_game_state.wybor = ai_agent(&original_game_state);
+                        the_o_sp.setPosition({get_2D_index(original_game_state.wybor).x * 100.f, get_2D_index(original_game_state.wybor).y * 100.f});
+                        sprites_to_draw.push_back(the_o_sp);
+                        Msq::make_move(&original_game_state);
+                        if (original_game_state.exit_flag == true)
                         {
-                            the_o_sp.setPosition({get_2D_index(original_game_state.wybor).x * 100.f, get_2D_index(original_game_state.wybor).y * 100.f});
-                            sprites_to_draw.push_back(the_o_sp);
-                            Msq::make_move(&original_game_state);
-                            if (Msq::is_end(&original_game_state))
-                            {
-                                // break;
-                            }
-                            // kolkos
+                            break;
                         }
+                        // kolkos
                     }
                 }
             }
