@@ -186,7 +186,7 @@ void ai_game_loop(sf::RenderWindow &_okno)
 
                     if (Msq::czyja_tura(&original_game_state) == 2)
                     {
-                        original_game_state.wybor = ai_move(&original_game_state);
+                        original_game_state.wybor = ai_random_move(&original_game_state);
                         the_o_sp.setPosition({get_2D_index(original_game_state.wybor).x * 100.f, get_2D_index(original_game_state.wybor).y * 100.f});
                         sprites_to_draw.push_back(the_o_sp);
                         Msq::make_move(&original_game_state);
