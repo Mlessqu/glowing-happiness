@@ -72,7 +72,6 @@ void co_op_game_loop(sf::RenderWindow &_okno)
 {
     // game loop initialization here
     std::vector<sf::Sprite> sprites_to_draw;
-    bool EXIT_FLAG = false;
     sprites_to_draw.push_back(board_sp);
     _okno.clear();
     _okno.draw(board_sp);
@@ -98,9 +97,9 @@ void co_op_game_loop(sf::RenderWindow &_okno)
                 {
                     sf::Vector2f mouse_pos = relative_mouse_pos(_okno);
                     original_game_state.wybor = get_1D_index(mouse_pos.x / 100, mouse_pos.y / 100); // translate mouse cord into 1D array 0-8
-                    if (original_game_state.board[original_game_state.wybor] == 0)
+                    if (Msq::is_valid_move(&original_game_state))
                     {
-                        original_game_state.board[original_game_state.wybor] = Msq::czyja_tura(&original_game_state);
+
                         if (Msq::czyja_tura(&original_game_state) == 2)
                         {
 
@@ -115,13 +114,7 @@ void co_op_game_loop(sf::RenderWindow &_okno)
                             sprites_to_draw.push_back(the_x_sp);
                             // krzyzyks
                         }
-                        if (is_end(&original_game_state))
-                        {
-                            EXIT_FLAG = true;
-                            // winner_loop(_okno);
-                            //  EXIT GAME LOOP HERE
-                        }
-                        original_game_state.tura++;
+                        Msq::make_move(&original_game_state);
                         debug_text.setString(debug_string(original_game_state.tura, original_game_state.wybor));
                     }
                     // draw_board(board);
@@ -137,7 +130,7 @@ void co_op_game_loop(sf::RenderWindow &_okno)
         _okno.draw(debug_text);
         _okno.draw(zwyciezca_text);
         _okno.display();
-        if (EXIT_FLAG)
+        if (original_game_state.exit_flag == true)
         {
             winner_loop(_okno);
             return;
@@ -150,7 +143,6 @@ void ai_game_loop(sf::RenderWindow &_okno)
     // game loop initialization here
     // game loop initialization here
     std::vector<sf::Sprite> sprites_to_draw;
-    bool EXIT_FLAG = false;
     sprites_to_draw.push_back(board_sp);
     _okno.clear();
     _okno.draw(board_sp);
@@ -178,34 +170,35 @@ void ai_game_loop(sf::RenderWindow &_okno)
                     original_game_state.wybor = get_1D_index(mouse_pos.x / 100, mouse_pos.y / 100); // translate mouse cord into 1D array 0-8, division by 100, because it is 100pixels wide and high
                     if (Msq::is_valid_move(&original_game_state))
                     {
+                        if (Msq::czyja_tura(&original_game_state) == 1)
+                        {
+                            //----------------------------------------------------
+                            the_x_sp.setPosition({get_2D_index(original_game_state.wybor).x * 100.f, get_2D_index(original_game_state.wybor).y * 100.f});
+                            sprites_to_draw.push_back(the_x_sp);
+                            //--------------------------------
+                        }
                         Msq::make_move(&original_game_state);
-                        the_x_sp.setPosition({get_2D_index(original_game_state.wybor).x * 100.f, get_2D_index(original_game_state.wybor).y * 100.f});
-                        sprites_to_draw.push_back(the_x_sp);
-
-                        if (is_end(&original_game_state))
+                        if (Msq::is_end(&original_game_state))
                         {
-                            EXIT_FLAG = true;
-                            // winner_loop(_okno);
-                            //  EXIT GAME LOOP HERE
+                            break; // tu sie cos pierdoli
                         }
-                        // krzyzyks
                     }
-                    original_game_state.wybor = ai_agent(&original_game_state);
+                    // krzyzyks
                     debug_text.setString(debug_string(original_game_state.tura, original_game_state.wybor));
-                    if (original_game_state.board[original_game_state.wybor] == 0)
+                    original_game_state.wybor = ai_agent(&original_game_state);
+                    if (Msq::is_valid_move(&original_game_state))
                     {
-                        original_game_state.board[original_game_state.wybor] = Msq::czyja_tura(&original_game_state);
-                        the_o_sp.setPosition({get_2D_index(original_game_state.wybor).x * 100.f, get_2D_index(original_game_state.wybor).y * 100.f});
-                        sprites_to_draw.push_back(the_o_sp);
-
-                        // kolkos
-                        if (is_end(&original_game_state))
+                        if (Msq::czyja_tura(&original_game_state) == 2)
                         {
-                            EXIT_FLAG = true;
-                            // winner_loop(_okno);
-                            //  EXIT GAME LOOP HERE
+                            the_o_sp.setPosition({get_2D_index(original_game_state.wybor).x * 100.f, get_2D_index(original_game_state.wybor).y * 100.f});
+                            sprites_to_draw.push_back(the_o_sp);
+                            Msq::make_move(&original_game_state);
+                            if (Msq::is_end(&original_game_state))
+                            {
+                                // break;
+                            }
+                            // kolkos
                         }
-                        original_game_state.tura++;
                     }
                 }
             }
@@ -221,7 +214,7 @@ void ai_game_loop(sf::RenderWindow &_okno)
         _okno.draw(zwyciezca_text);
         _okno.draw(debug_text);
         _okno.display();
-        if (EXIT_FLAG)
+        if (original_game_state.exit_flag == true)
         {
             winner_loop(_okno);
             return; // exit function, effectively exit state

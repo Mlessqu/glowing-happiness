@@ -18,7 +18,7 @@ int ai_agent(Msq::GameState *_game_state)
 
 int calculate_score_for_move(Msq::GameState *_game_state)
 {
-    if (check_winner(_game_state->board)) // we check for the winner afterwards
+    if (Msq::check_winner(_game_state->board)) // we check for the winner afterwards
     {
 
         if (czyja_tura(_game_state) == 1) // krzyzyk
