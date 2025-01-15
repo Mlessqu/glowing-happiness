@@ -1,6 +1,7 @@
 #pragma once
 #include "ai.hpp"
 #include "button.hpp"
+#include "input.hpp"
 #include "resources.hpp"
 #include "utility.hpp"
 #include <SFML/Graphics.hpp>
@@ -12,6 +13,7 @@
 #include <SFML/Network/TcpSocket.hpp>
 #include <bits/stdc++.h>
 #include <string>
+#include <vector>
 extern sf::Font font;
 extern sf::Text zwyciezca_text;
 extern sf::Texture board_texture; // tekstura boardu
@@ -30,13 +32,17 @@ void network_loop_client(sf::RenderWindow &_okno);
 void network_loop_host(sf::RenderWindow &_okno);
 void menu_loop(sf::RenderWindow &_okno) {
   // menu initialization here
+  std::vector<Button> buttons;
+  Button start_button({200, 30}, {150, 50}, "CO OP", _okno,
+                      [&] { co_op_game_loop(_okno); });
 
-  Button start_button({200, 30}, {150, 50}, "CO OP");
-  start_button.callback = [&] { co_op_game_loop(_okno); };
-  Button vs_ai_button({200, 30}, {150, 100}, "VS AI",
+  Button vs_ai_button({200, 30}, {150, 100}, "VS AI", _okno,
                       [&] { ai_game_loop(_okno); });
-  Button over_network_client({200, 50}, {150, 150}, "network as client");
-  Button over_network_host({200, 50}, {150, 200}, "network as host");
+
+  Button over_network_client({200, 50}, {150, 150}, "network as client", _okno,
+                             [&] { network_loop_client(_okno); });
+  Button over_network_host({200, 50}, {150, 200}, "network as host", _okno,
+                           [&] { network_loop_host(_okno); });
   over_network_client.text.setCharacterSize(14);
   over_network_host.text.setCharacterSize(14);
   // loop proper
@@ -45,36 +51,12 @@ void menu_loop(sf::RenderWindow &_okno) {
       if (_event->is<sf::Event::Closed>()) {
         _okno.close();
       }
-      if (const auto *mouseButtonPressed =
-              _event->getIf<sf::Event::MouseButtonPressed>()) {
-
-        if (mouseButtonPressed->button == sf::Mouse::Button::Left) {
-          if (start_button.button_body.getGlobalBounds().contains(
-                  relative_mouse_pos(_okno))) {
-            // start game loop
-            start_button.callback();
-            //co_op_game_loop(_okno);
-            // cleanup here
-            zwyciezca_text.setString("");
-          }
-          if (vs_ai_button.button_body.getGlobalBounds().contains(
-                  relative_mouse_pos(_okno))) {
-            // start  ai game loop
-            ai_game_loop(_okno);
-            // cleanup here
-            zwyciezca_text.setString("");
-          }
-          if (over_network_client.button_body.getGlobalBounds().contains(
-                  relative_mouse_pos(_okno))) {
-            network_loop_client(_okno);
-          }
-          if (over_network_host.button_body.getGlobalBounds().contains(
-                  relative_mouse_pos(_okno))) {
-            network_loop_host(_okno);
-          }
-        }
-      }
     }
+    update_input(_okno);
+    start_button.update();
+    vs_ai_button.update();
+    over_network_client.update();
+    over_network_host.update();
     _okno.clear();
     _okno.draw(start_button);
     _okno.draw(vs_ai_button);
