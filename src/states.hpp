@@ -32,7 +32,9 @@ void menu_loop(sf::RenderWindow &_okno) {
   // menu initialization here
 
   Button start_button({200, 30}, {150, 50}, "CO OP");
-  Button vs_ai_button({200, 30}, {150, 100}, "VS AI");
+  start_button.callback = [&] { co_op_game_loop(_okno); };
+  Button vs_ai_button({200, 30}, {150, 100}, "VS AI",
+                      [&] { ai_game_loop(_okno); });
   Button over_network_client({200, 50}, {150, 150}, "network as client");
   Button over_network_host({200, 50}, {150, 200}, "network as host");
   over_network_client.text.setCharacterSize(14);
@@ -50,7 +52,8 @@ void menu_loop(sf::RenderWindow &_okno) {
           if (start_button.button_body.getGlobalBounds().contains(
                   relative_mouse_pos(_okno))) {
             // start game loop
-            co_op_game_loop(_okno);
+            start_button.callback();
+            //co_op_game_loop(_okno);
             // cleanup here
             zwyciezca_text.setString("");
           }

@@ -12,6 +12,6 @@ FetchContent_Declare(SFML
     EXCLUDE_FROM_ALL
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
+add_subdirectory(src)
 
-add_executable(main src/main.cpp src/logic.hpp src/states.hpp src/utility.hpp src/button.hpp src/resources.hpp)
-target_link_libraries(main PRIVATE SFML::Graphics SFML::Network)
+target_link_libraries(tic-tac PRIVATE SFML::Graphics SFML::Network)

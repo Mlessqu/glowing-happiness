@@ -86,3 +86,4 @@ bool check_winner(int *_board) {
   return false; // otherwise no winner
 }
 } // namespace Msq
+
