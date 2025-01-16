@@ -1,4 +1,5 @@
 #include "resources.hpp"
+extern sf::Text zwyciezca_text;
 namespace Msq {
 void make_move(GameState *_gamestate) {
   if (is_valid_move(_gamestate) == false)

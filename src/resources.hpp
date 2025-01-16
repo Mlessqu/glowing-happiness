@@ -1,7 +1,7 @@
 #pragma once
 
-#include "utility.hpp"
-extern sf::Text zwyciezca_text;
+#include <SFML/Graphics.hpp>
+
 namespace Msq {
 struct GameState {
   int board[9] = {0, 0, 0, // tablica
@@ -16,4 +16,4 @@ int czyja_tura(GameState *_game_state);
 bool is_valid_move(GameState *_gamestate);
 bool check_winner(int *_board);
 void make_move(GameState *_gamestate);
-// declarations
+} // namespace Msq

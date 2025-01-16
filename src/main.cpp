@@ -1,4 +1,4 @@
-#include "logic.hpp"
+
 #include "states.hpp"
 #include <SFML/Graphics.hpp>
 #include <cassert>

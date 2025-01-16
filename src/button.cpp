@@ -1,5 +1,5 @@
 #include "button.hpp"
-
+#include "input.hpp"
 Button::Button(sf::Vector2f _size, sf::Vector2f _pos, std::string _caption,
                sf::RenderWindow &_okno_handle)
     : text(font), okno_handle(_okno_handle) {

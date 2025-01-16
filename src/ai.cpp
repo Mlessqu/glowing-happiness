@@ -1,4 +1,6 @@
 #include "ai.hpp"
+#include <algorithm>
+#include <random>
 int ai_random_move(Msq::GameState *_game_state) {
   std::vector<int> lista;
   for (int i = 0; i < 9; i++) {

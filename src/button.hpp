@@ -1,6 +1,4 @@
 #pragma once
-#include "input.hpp"
-#include "utility.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -28,4 +26,3 @@ private:
     target.draw(text);
   }
 };
-
