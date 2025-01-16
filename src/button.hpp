@@ -2,21 +2,19 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
-#include <SFML/Window/Mouse.hpp>
-#include <SFML/Window/Window.hpp>
 #include <functional>
 #include <string>
 extern sf::Font font;
 class Button : public sf::Drawable {
 
 public:
-  Button(sf::Vector2f _size, sf::Vector2f _pos, std::string _caption,
+  Button(sf::Vector2f _size, sf::Vector2f _pos,const std::string &_caption,
          sf::RenderWindow &_okno_handle);
-  Button(sf::Vector2f _size, sf::Vector2f _pos, std::string _caption,
-         sf::RenderWindow &_okno_handle, std::function<void()> _callback);
+  Button(sf::Vector2f _size, sf::Vector2f _pos, const std::string& _caption,
+         sf::RenderWindow &_okno_handle, const std::function<void()> &_callback);
   sf::Text text;
   std::function<void()> callback = nullptr;
-  void update();
+  void update() const;
 
 private:
   sf::RectangleShape button_body;

@@ -24,26 +24,26 @@ int main() {
   //---------------------
   if (!board_texture.loadFromFile("board.png")) {
     assert(false);
-    std::cout << "Nie zaladowano board.png";
-  } else // ladowanie boarda
+    std::cout << "Nie załadowano board.png";
+  } else // ładowanie boarda
     board_sp.setTexture(board_texture);
   //---------------------
   if (!the_o.loadFromFile("o.png")) {
     assert(false);
-    std::cout << "Nie zaladowano o.png";
+    std::cout << "Nie załadowano o.png";
     // error...
   } else
     the_o_sp.setTexture(the_o);
   //---------------------
   if (!the_x.loadFromFile("x.png")) {
-    std::cout << "Nie zaladowano x.png";
+    std::cout << "Nie załadowano x.png";
   } else
     the_x_sp.setTexture(the_x);
   //---------------------
   // load font
   if (!font.openFromFile("arial.ttf")) {
     assert(false);
-    std::cout << "Nie zaladowano arial.ttf";
+    std::cout << "Nie załadowano arial.ttf";
   }
   //---------------
   // select the font
@@ -56,6 +56,5 @@ int main() {
 
   menu_loop(window);
 
-  // game_loop(window);
   return 0;
 }
