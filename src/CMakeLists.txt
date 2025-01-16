@@ -1,2 +1,2 @@
-add_executable(tic-tac main.cpp logic.hpp states.hpp utility.hpp
- button.hpp resources.hpp input.hpp button.cpp)
+add_executable(tic-tac main.cpp states.hpp states.cpp utility.hpp utility.cpp
+ button.hpp button.cpp resources.hpp resources.cpp input.hpp input.cpp)
