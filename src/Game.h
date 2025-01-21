@@ -24,7 +24,7 @@ private:
 	bool is_legal_move(int _wybor);
 	Turn czyja_tura();
 	int tura_=0;
-	int board_[9]{};
+	std::array<int,9> board_ = {};
 	bool check_winner();
 	bool wygrana_ = false;
 
