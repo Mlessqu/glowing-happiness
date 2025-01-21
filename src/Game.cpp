@@ -5,6 +5,8 @@
 #include "Game.h"
 #include <iostream>
 
+#include "utility.hpp"
+
 enum Turn;
 Game::Game()
 {
@@ -15,37 +17,84 @@ Game::Game()
 	tura_=0;
 }
 
+void Game::debug_info()
+{
+	draw_line(7);
+	std::cout << "\n";
+	int counter = 0;
+	for (int i = 0; i < 18; i++) {
+		if (counter == 9) {
+			std::cout << "shit";
+			return;
+		}
+		if (!(i % 2)) {
+			std::cout << "#";
+		} else {
+			std::cout << draw_sign(board_[counter]);
+			counter++;
+		}
+		const int enter_after = 6;
+		if (((i % enter_after) == 0) && i != 0)
+			std::cout << "\n#";
+	}
+	std::cout << "#\n";
+	draw_line(6);
+	std::cout << "\n";
+	std::cout << "Tura: " << tura_ << std::endl;
+
+}
+
+void Game::reset()
+{
+	// reset rundy
+}
+
 
 void Game::end_game()
 {
 	//if somebody wins
-	if (check_winner())
+		Turn enum_turn = czyja_to_byla();
+	if(tura_ == 8)//mamy remis
 	{
-		if (czyja_tura() == krzyzyk)
+		std::cout << "Remis";
+		return;
+	}
+		if (enum_turn == krzyzyk)
 		{
 			std::cout << "Wygrał krzyzyk!";
-		}else if (czyja_tura() == kolko)
+			return;
+		}else if (enum_turn == kolko)
 		{
 			std::cout << "Wygralo kolko!";
-		}else if(tura_ == 8)//mamy remis
-		{
-				std::cout << "Remis";
+			return;
 		}
-	}
 }
 
 bool Game::make_turn(int _wybor) //we return true on sucesful turn
 {
+	if (wygrana_ == true)
+		return false;
+
 		if (is_legal_move(_wybor)==false)
 		{
 			return false;
 		}
-		board_[_wybor] = czyja_tura();
-	++tura_;
+		board_[_wybor] = czyja_tura(); //actual move here
+
+	++tura_; //increment tura
+	if (check_winner()) //na samym koncu check if there is a winner
+	{
+		//who won?
+		std::cout << "inside check_winner, before end_game()" << std::endl;
+		end_game();
+		wygrana_ = true;
+	}
+	debug_info();
+	std::cout << "Wybor:" <<  _wybor << std::endl;
 	return true;
 }
 
-Turn Game::czyja_to_byla(int _wybor)
+Turn Game::czyja_to_byla()
 {
 	if (tura_ %2)
 	{
@@ -90,21 +139,21 @@ Turn Game::czyja_tura()
 bool Game::check_winner() //checks if current board has any winner
 {
 	/* let 0 - empty, 1 - krzyzyk, 2- kolko
-	// [0][0].[1][1],[2][2] //pierwszy diagonal
+	// [0][0],[1][1],[2][2] //pierwszy diagonal
 	// [0][2],[1][1],[2][0] //drugi diagonal
 	// [n][0],[n][1],[n][2] //wiersze
 	// [0][n],[1][n],[2][n] //kolumny */
-	if ((board_[0] == board_[4] && board_[4] == board_[8]) && board_[0] != 0)
-		{
-	return true;
-	} // if all diagonal equal but not 0 then true
-	if ((board_[6] == board_[4] && board_[4] == board_[2]) && board_[6] != 0)
+	if((board_[0] == board_[4]) && (board_[4] == board_[8]) && board_[0] != 0)
 	{
 	return true;
 	} // if all diagonal equal but not 0 then true
-	for (int i = 0; i < 6; i = i + 3)
+	if ((board_[6] == board_[4]) && (board_[4] == board_[2]) && board_[6] != 0)
 	{
-		if ((board_[i] == board_[i + 1] && board_[i + 1] == board_[i + 2]) &&
+	return true;
+	} // if all diagonal equal but not 0 then true
+	for (int i = 0; i < 7; i = i + 3)
+	{
+		if (((board_[i] == board_[i + 1]) && (board_[i + 1] == board_[i + 2])) &&
 		board_[i] != 0)
 		{
 			return true; // columns all equal but not 0
@@ -112,7 +161,7 @@ bool Game::check_winner() //checks if current board has any winner
 	}
 	for (int i = 0; i < 3; i++)
 	{
-		if ((board_[i] == board_[i + 3] && board_[i + 3] == board_[i + 6]) &&
+		if (((board_[i] == board_[i + 3]) && (board_[i + 3] == board_[i + 6])) &&
 		board_[i] != 0)
 		{
 			return true; // row all equal but not 0

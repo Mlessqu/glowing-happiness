@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "ResourceManager.h"
+#include "StateMachine.h"
 #include "utility.hpp"
 
 
@@ -31,17 +32,36 @@ void LocalGameState::update()
 		{
 			okno_ref_.close();
 		}
-		if (const auto *mouse_pressed = event->getIf<sf::Event::MouseButtonPressed>())
+		if (const auto *mouse_pressed = event->getIf<sf::Event::MouseButtonPressed>()) //was mouse button pressed?
 		{
-			auto mouse_pos =  relative_mouse_pos(okno_ref_);
-			int wybor = get_1D_index(mouse_pos.x/100,mouse_pos.y/100);
-			std::cout << wybor << std::endl;
-			if(game_.make_turn(wybor) )
+			if (mouse_pressed->button == sf::Mouse::Button::Left) //was it left one?
+			{
+				auto mouse_pos =  relative_mouse_pos(okno_ref_); // get relative mouse cords to window
+				int wybor = get_1D_index(mouse_pos.x/100,mouse_pos.y/100); //calculate at which field was clicked
+
+
+				if(game_.make_turn(wybor) )//jezeli tura zostala wykonana to trzeba narysowac
+				{
+					sf::Vector2f temp_pos = {get_2D_index(wybor).x * 100.f,get_2D_index(wybor).y*100.f};
+					if (game_.czyja_to_byla() == krzyzyk)
+					{
+
+						krzyzyk_sprite_.setPosition(temp_pos);
+						sprites_to_draw_.push_back(krzyzyk_sprite_);
+					} else if(game_.czyja_to_byla() == kolko)
+					{
+						kolko_sprite_.setPosition(temp_pos);
+						sprites_to_draw_.push_back(kolko_sprite_);
+					}
+				}
+			}else if (mouse_pressed->button == sf::Mouse::Button::Right)
 			{
 
+						machine_ref_.pop_state();// quit here
 			}
 		}
 	}
+	game_.update();
 }
 void LocalGameState::draw()
 {

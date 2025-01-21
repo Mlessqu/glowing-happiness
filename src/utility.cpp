@@ -6,30 +6,7 @@ sf::Vector2f relative_mouse_pos(sf::RenderWindow &_okno) {
   return worldPos;
 }
 
-void draw_board(int *_board) // drawing board bullshitery
-{
-  draw_line(7);
-  std::cout << "\n";
-  int counter = 0;
-  for (int i = 0; i < 18; i++) {
-    if (counter == 9) {
-      std::cout << "shit";
-      return;
-    }
-    if (!(i % 2)) {
-      std::cout << "#";
-    } else {
-      std::cout << draw_sign(_board[counter]);
-      counter++;
-    }
-    const int enter_after = 6;
-    if (((i % enter_after) == 0) && i != 0)
-      std::cout << "\n#";
-  }
-  std::cout << "#\n";
-  draw_line(6);
-  std::cout << "\n";
-}
+
 
 void draw_line(int _ile) {
   for (int i = 0; i < _ile; i++) {

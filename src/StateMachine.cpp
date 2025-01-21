@@ -21,6 +21,7 @@ void StateMachine::next_state()
 		//cleanup
 		if (!states.empty())
 		{
+			states.top()->pause(); // clean up in pause
 			states.pop();
 		}
 		if (!states.empty())
@@ -29,10 +30,7 @@ void StateMachine::next_state()
 		}
 		is_popped = false;
 	}
-	if (!states.empty())
-	{
 
-	}
 }
 
 void StateMachine::pop_state() {

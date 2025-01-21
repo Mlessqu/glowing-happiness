@@ -14,8 +14,10 @@ public:
 	Game();
 	void end_game();
 	bool make_turn(int _wybor);
-	Turn czyja_to_byla(int _wybor);
+	Turn czyja_to_byla();
 	void update();
+	void debug_info();
+	void reset();
 private:
 
 	const int PLACES = 9;
@@ -24,7 +26,7 @@ private:
 	int tura_=0;
 	int board_[9]{};
 	bool check_winner();
-
+	bool wygrana_ = false;
 
 
 
