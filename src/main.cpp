@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <cassert>
 #include <iostream>
-
+#include "Application.h"
 sf::Font font;
 sf::Text zwyciezca_text(font);
 sf::Texture board_texture("board.png"); // tekstura boardu
@@ -15,6 +15,8 @@ sf::Sprite the_o_sp(the_o);
 sf::Texture the_x("x.png");
 sf::Sprite the_x_sp(the_x);
 int main() {
+  Application app;
+  app.run();
   //---------------------
   // #####@@@@@@@@@@@@@@@@@@@@@@
   // inicjalizacja

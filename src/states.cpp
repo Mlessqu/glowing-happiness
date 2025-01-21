@@ -3,7 +3,6 @@
 #include "states.hpp"
 #include "ai.hpp"
 #include "button.hpp"
-#include "input.hpp"
 #include "resources.hpp"
 #include "utility.hpp"
 #include <SFML/Graphics.hpp>
@@ -18,7 +17,7 @@
 #include <vector>
 void menu_loop(sf::RenderWindow &_okno) {
   // menu initialization here
-  std::vector<Button> buttons;
+  std::vector<std::unique_ptr<Button>> buttons;
   Button start_button({200, 30}, {150, 50}, "CO OP", _okno,
                       [&] { co_op_game_loop(_okno); });
 
@@ -31,14 +30,24 @@ void menu_loop(sf::RenderWindow &_okno) {
                            [&] { network_loop_host(_okno); });
   over_network_client.text.setCharacterSize(14);
   over_network_host.text.setCharacterSize(14);
+  buttons.push_back(std::make_unique<Button>(over_network_client));
+  buttons.push_back(std::make_unique<Button>(over_network_host));
+  buttons.push_back(std::make_unique<Button>(vs_ai_button));
+  buttons.push_back(std::make_unique<Button>(start_button));
   // loop proper
-  while (_okno.isOpen()) {
+  while (_okno.isOpen())
+    {
     while (const std::optional _event = _okno.pollEvent()) {
       if (_event->is<sf::Event::Closed>()) {
         _okno.close();
+      }else if (_event->is<sf::Event::MouseButtonPressed>())
+      {
+          for (const auto & button : buttons)
+          {
+            button->update();
+          }
       }
     }
-    update_input(_okno);
     start_button.update();
     vs_ai_button.update();
     over_network_client.update();
@@ -258,27 +267,31 @@ void network_loop_host(sf::RenderWindow &_okno) {
       if (_event->is<sf::Event::Closed>()) {
         _okno.close();
       }
-    }
-    //-----------------
-    update_input(_okno);
-    // host robie ture
-    if (Msq::czyja_tura(&original_game_state) == 1 && input_data.left_mouse) {
+      if (const auto* mouseButtonPressed = _event->getIf<sf::Event::MouseButtonPressed>())
+      {
+        //-----------------
+        // host robie ture
+        if (Msq::czyja_tura(&original_game_state) == 1)
+          {
 
-      original_game_state.wybor = get_1D_index(input_data.mouse_pos.x / 100,
-                                               input_data.mouse_pos.y / 100);
-      if (Msq::is_valid_move(&original_game_state)) {
-        packet << original_game_state.wybor;
-        while (client.send(packet) == sf::Socket::Status::Partial) {
-          // until we succesfully send the packet we loop it
+          original_game_state.wybor = get_1D_index(relative_mouse_pos(_okno).x,
+                                                   relative_mouse_pos(_okno).y);
+          if (Msq::is_valid_move(&original_game_state)) {
+            packet << original_game_state.wybor;
+            while (client.send(packet) == sf::Socket::Status::Partial) {
+              // until we succesfully send the packet we loop it
+            }
+
+            the_x_sp.setPosition(
+                {get_2D_index(original_game_state.wybor).x * 100.f,
+                 get_2D_index(original_game_state.wybor).y * 100.f});
+            sprites_to_draw.push_back(the_x_sp);
+            Msq::make_move(&original_game_state);
+          }
         }
-
-        the_x_sp.setPosition(
-            {get_2D_index(original_game_state.wybor).x * 100.f,
-             get_2D_index(original_game_state.wybor).y * 100.f});
-        sprites_to_draw.push_back(the_x_sp);
-        Msq::make_move(&original_game_state);
       }
     }
+
 
     // tura klienta
     if (Msq::czyja_tura(&original_game_state) == 2) {
@@ -341,15 +354,15 @@ void network_loop_client(sf::RenderWindow &_okno) {
     {
       debug_text.setString(
           debug_string(original_game_state.tura, original_game_state.wybor));
-      if (_event->is<sf::Event::Closed>()) {
+      if (_event->is<sf::Event::Closed>())
+      {
         _okno.close();
-      }
+      } else if (_event->is<sf::Event::KeyPressed>()) {}
     }
     // klient robie ture
-    update_input(_okno);
-    if (Msq::czyja_tura(&original_game_state) == 2 && input_data.left_mouse) {
-      original_game_state.wybor = get_1D_index(input_data.mouse_pos.x / 100,
-                                               input_data.mouse_pos.y / 100);
+    if (Msq::czyja_tura(&original_game_state) == 2 ) {
+      original_game_state.wybor = get_1D_index(relative_mouse_pos(_okno).x,
+                                               relative_mouse_pos(_okno).y);
       if (Msq::is_valid_move(&original_game_state)) {
 
         packet << original_game_state.wybor;

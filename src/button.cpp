@@ -1,5 +1,6 @@
 #include "button.hpp"
-#include "input.hpp"
+#include "utility.hpp"
+
 Button::Button(sf::Vector2f _size, sf::Vector2f _pos, const std::string &_caption,
                sf::RenderWindow &_okno_handle)
     : text(font), okno_handle(_okno_handle) {
@@ -43,8 +44,8 @@ Button::Button(sf::Vector2f _size, sf::Vector2f _pos, const std::string& _captio
 void Button::update() const {
   if (callback == nullptr)
     return;
-  if (this->button_body.getGlobalBounds().contains(input_data.mouse_pos) &&
-      input_data.left_mouse) {
+  if (this->button_body.getGlobalBounds().contains(relative_mouse_pos(okno_handle)))
+    {
     callback();
   }
 }

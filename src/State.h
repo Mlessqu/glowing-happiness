@@ -4,13 +4,29 @@
 
 #ifndef STATE_H
 #define STATE_H
+#include <SFML/Graphics.hpp>
+class StateMachine;
 
+namespace sf
+{
+    class RenderWindow;
+}
+/*TODO */
+class State
+{
+public:
+    State(StateMachine &_machine_ref, sf::RenderWindow &_okno);
 
-
-class State {
-
+    virtual ~State() = default;
+    virtual void pause() = 0;
+    virtual void resume() = 0;
+    virtual void update() = 0;
+    virtual void draw() = 0;
+protected:
+    StateMachine & machine_ref_;
+    sf::RenderWindow& okno_ref_;
+private:
 };
-
 
 
 #endif //STATE_H
