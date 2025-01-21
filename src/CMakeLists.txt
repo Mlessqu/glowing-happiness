@@ -1,5 +1,5 @@
-add_executable(tic-tac main.cpp states.cpp utility.hpp utility.cpp
-        Button.h Button.cpp ai.cpp
+add_executable(tic-tac main.cpp states.cpp Utility.h Utility.cpp
+        Button.h Button.cpp
         StateMachine.cpp
         StateMachine.h
         Application.cpp

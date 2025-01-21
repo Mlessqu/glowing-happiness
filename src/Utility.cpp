@@ -1,12 +1,19 @@
-#include "utility.hpp"
+#include "Utility.h"
 #include <iostream>
+#include <stdlib.h>
+#include<time.h>
 sf::Vector2f relative_mouse_pos(sf::RenderWindow &_okno) {
   sf::Vector2i pixelPos = sf::Mouse::getPosition(_okno);
   sf::Vector2f worldPos = _okno.mapPixelToCoords(pixelPos);
   return worldPos;
 }
 
+int random_int(int _min, int _max)
+{
+  srand(time(NULL));
 
+  return rand() %(_max-_min) + _min;
+}
 
 void draw_line(int _ile) {
   for (int i = 0; i < _ile; i++) {

@@ -5,17 +5,22 @@
 #include "Game.h"
 #include <iostream>
 
-#include "utility.hpp"
+#include "Utility.h"
 
 enum Turn;
 Game::Game()
 {
-	for (int i =0;i < PLACES;i++)
-	{
-		board_[i]=0;
-	}
+
 	tura_=0;
 }
+
+void Game::init(std::array<int, 9> _board, int _tura)
+{
+	board_ = _board;
+	tura_ = _tura;
+
+}
+
 
 void Game::debug_info()
 {
@@ -72,6 +77,7 @@ void Game::end_game()
 
 bool Game::make_turn(int _wybor) //we return true on sucesful turn
 {
+	current_wybor_ = _wybor;
 	if (wygrana_ == true)
 		return false;
 
@@ -104,6 +110,17 @@ Turn Game::czyja_to_byla()
 		return krzyzyk;
 	}
 }
+
+std::array<int, 9> Game::get_current_board_state() const
+{
+	return board_;
+}
+
+int Game::get_current_turn() const {
+	return tura_;
+}
+
+
 
 void Game::update()
 {

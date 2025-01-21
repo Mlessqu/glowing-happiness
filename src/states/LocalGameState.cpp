@@ -8,7 +8,7 @@
 
 #include "../ResourceManager.h"
 #include "../StateMachine.h"
-#include "../utility.hpp"
+#include "../Utility.h"
 
 
 LocalGameState::LocalGameState(StateMachine &_machine_ref, sf::RenderWindow &_okno)

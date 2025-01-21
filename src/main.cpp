@@ -10,3 +10,6 @@ int main() {
 
   return 0;
 }
+//TO DO
+//Ai losowy ruch aby robił
+//

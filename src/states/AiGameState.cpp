@@ -7,7 +7,7 @@
 #include <iostream>
 
 #include "../ResourceManager.h"
-#include "../utility.hpp"
+#include "../Utility.h"
 #include "../StateMachine.h"
 class ResourceManager;
 class StateMachine;

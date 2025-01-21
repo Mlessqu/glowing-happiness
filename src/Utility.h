@@ -9,4 +9,6 @@ int get_1D_index(int _x, int _y);
 sf::Vector2f get_2D_index(int _x);
 std::string debug_string(int _tura, int _wybor);
 int get_1D_index(sf::Vector2f _pos);
-//sdsa
+int random_int(int _min, int _max);
+
+
