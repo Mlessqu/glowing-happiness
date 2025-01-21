@@ -10,21 +10,38 @@ namespace sf {
 	class RenderWindow;
 }
 
-StateMachine::StateMachine() : is_running(false), is_paused(false) {}
+StateMachine::StateMachine() : is_running(false), is_popped(false) {}
 
 StateMachine::~StateMachine() = default;
 
-
-void StateMachine::push_state(std::unique_ptr<State> _state)
+void StateMachine::next_state()
 {
-	states.push(std::move(_state));
+	if (is_popped)
+	{
+		//cleanup
+		if (!states.empty())
+		{
+			states.pop();
+		}
+		if (!states.empty())
+		{
+			states.top()->resume();
+		}
+		is_popped = false;
+	}
+	if (!states.empty())
+	{
+		auto temp = states.top()->next_state();
+		if (temp != nullptr)
+		{
+			states.top()->pause();
+			states.push(std::move(temp));
+		}
+	}
 }
 
 void StateMachine::pop_state() {
-	if (!states.empty())
-	{
-		states.pop();
-	}
+	is_popped = true; //we set flag to pop the state and quit to previous one
 }
 
 
@@ -33,7 +50,10 @@ void StateMachine::update() {
 }
 void StateMachine::draw()
 {
+	if (states.empty())
+		return;
 	states.top()->draw();
+
 }
 
 void StateMachine::run(std::unique_ptr<State> _state) {

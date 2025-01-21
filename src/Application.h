@@ -5,6 +5,8 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 #include<SFML/Graphics.hpp>
+
+#include "ResourceManager.h"
 #include"StateMachine.h"
 
 class Application {
@@ -16,9 +18,7 @@ public:
 private:
 	sf::RenderWindow window_;
 	StateMachine state_machine_;
-	void process_events();
-	void update();
-	void render();
+	ResourceManager resource_manager_;
 };
 
 

@@ -17,18 +17,19 @@ class StateMachine {
     public:
     StateMachine();
     ~StateMachine();
-    void push_state(std::unique_ptr<State> _state);
+    void next_state();
     void pop_state();
     void update();
     void draw();
     void quit();
+    void run(std::unique_ptr<State> _state);
     [[nodiscard]] bool running() const;
     template <typename T>
     static std::unique_ptr<T> create_new_state(StateMachine &_state_machine,sf::RenderWindow &_okno);
-    void run(std::unique_ptr<State> _state);
+
     private:
     bool is_running;
-    bool is_paused;
+    bool is_popped;
     std::stack<std::unique_ptr<State>> states;
 };
 

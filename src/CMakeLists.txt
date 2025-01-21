@@ -8,4 +8,14 @@ add_executable(tic-tac main.cpp states.hpp states.cpp utility.hpp utility.cpp
         Application.h
         MenuState.cpp
         MenuState.h
+        ResourceManager.cpp
+        ResourceManager.h
+        LocalGameState.cpp
+        LocalGameState.h
+        AiGameState.cpp
+        AiGameState.h
+        OnlineHostState.cpp
+        OnlineHostState.h
+        OnlineClientState.cpp
+        OnlineClientState.h
 )

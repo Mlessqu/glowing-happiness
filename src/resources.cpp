@@ -1,4 +1,4 @@
-#include "resources.hpp"
+/*#include "resources.hpp"
 extern sf::Text zwyciezca_text;
 namespace Msq {
 void make_move(GameState *_gamestate) {
@@ -47,7 +47,7 @@ bool is_end(GameState *_game_state) {
   return false;
 }
 bool check_winner(int *_board) {
-  /* let 0 - empty, 1 - krzyzyk, 2- kolko*/
+  /* let 0 - empty, 1 - krzyzyk, 2- kolko
   // [0][0].[1][1],[2][2] //pierwszy diagonal
   // [0][2],[1][1],[2][0] //drugi diagonal
   // [n][0],[n][1],[n][2] //wiersze
@@ -71,3 +71,4 @@ bool check_winner(int *_board) {
   return false; // otherwise no winner
 }
 } // namespace Msq
+*/

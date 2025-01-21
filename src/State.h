@@ -22,9 +22,11 @@ public:
     virtual void resume() = 0;
     virtual void update() = 0;
     virtual void draw() = 0;
+    std::unique_ptr<State> next_state();
 protected:
     StateMachine & machine_ref_;
     sf::RenderWindow& okno_ref_;
+    std::unique_ptr<State> next_state_ptr_;
 private:
 };
 

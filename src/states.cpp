@@ -1,40 +1,8 @@
 
 
-#include "states.hpp"
-#include "ai.hpp"
-#include "button.hpp"
-#include "resources.hpp"
-#include "utility.hpp"
-#include <SFML/Graphics.hpp>
-#include <SFML/Network.hpp>
-#include <SFML/Network/IpAddress.hpp>
-#include <SFML/Network/Packet.hpp>
-#include <SFML/Network/Socket.hpp>
-#include <SFML/Network/TcpListener.hpp>
-#include <SFML/Network/TcpSocket.hpp>
-#include <bits/stdc++.h>
-#include <string>
-#include <vector>
+/*
 void menu_loop(sf::RenderWindow &_okno) {
-  // menu initialization here
-  std::vector<std::unique_ptr<Button>> buttons;
-  Button start_button({200, 30}, {150, 50}, "CO OP", _okno,
-                      [&] { co_op_game_loop(_okno); });
 
-  Button vs_ai_button({200, 30}, {150, 100}, "VS AI", _okno,
-                      [&] { ai_game_loop(_okno); });
-
-  Button over_network_client({200, 50}, {150, 150}, "network as client", _okno,
-                             [&] { network_loop_client(_okno); });
-  Button over_network_host({200, 50}, {150, 200}, "network as host", _okno,
-                           [&] { network_loop_host(_okno); });
-  over_network_client.text.setCharacterSize(14);
-  over_network_host.text.setCharacterSize(14);
-  buttons.push_back(std::make_unique<Button>(over_network_client));
-  buttons.push_back(std::make_unique<Button>(over_network_host));
-  buttons.push_back(std::make_unique<Button>(vs_ai_button));
-  buttons.push_back(std::make_unique<Button>(start_button));
-  // loop proper
   while (_okno.isOpen())
     {
     while (const std::optional _event = _okno.pollEvent()) {
@@ -408,3 +376,4 @@ void network_loop_client(sf::RenderWindow &_okno) {
     return;
   }
 }
+*/
