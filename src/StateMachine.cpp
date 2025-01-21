@@ -31,12 +31,7 @@ void StateMachine::next_state()
 	}
 	if (!states.empty())
 	{
-		auto temp = states.top()->next_state();
-		if (temp != nullptr)
-		{
-			states.top()->pause();
-			states.push(std::move(temp));
-		}
+
 	}
 }
 
@@ -57,6 +52,10 @@ void StateMachine::draw()
 }
 
 void StateMachine::run(std::unique_ptr<State> _state) {
+	if(!states.empty())
+	{
+		states.top()->pause();
+	}
 	is_running = true;
 	states.push(std::move(_state));
 }

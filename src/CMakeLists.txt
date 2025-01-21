@@ -18,4 +18,6 @@ add_executable(tic-tac main.cpp states.hpp states.cpp utility.hpp utility.cpp
         OnlineHostState.h
         OnlineClientState.cpp
         OnlineClientState.h
+        Game.cpp
+        Game.h
 )

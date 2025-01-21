@@ -10,6 +10,7 @@
 #include "LocalGameState.h"
 #include "OnlineClientState.h"
 #include "OnlineHostState.h"
+#include "ResourceManager.h"
 #include "StateMachine.h"
 class LocalGameState;
 class OnlineClientState;
@@ -19,27 +20,28 @@ class AiGameState;
 MenuState::MenuState(StateMachine &_machine_ref, sf::RenderWindow &_okno) : State { _machine_ref,_okno}
 {
 		std::cout << "Menu state intialized" << std::endl;
-	Button start_button({200, 30}, {150, 50}, "CO OP", _okno,
+
+	Button start_button({200, 30}, {150, 50}, "CO OP", resource_manager_ref_.get_font(), _okno,
 											[&]
 											{
-												StateMachine::create_new_state<LocalGameState>(machine_ref_,okno_ref_);
+												machine_ref_.run(StateMachine::create_new_state<LocalGameState>(machine_ref_,okno_ref_));
 											});
 
-	Button vs_ai_button({200, 30}, {150, 100}, "VS AI", _okno,
+	Button vs_ai_button({200, 30}, {150, 100}, "VS AI",resource_manager_ref_.get_font(), _okno,
 											[&]
 											{
-												StateMachine::create_new_state<AiGameState>(machine_ref_,okno_ref_);
+												machine_ref_.run(StateMachine::create_new_state<AiGameState>(machine_ref_,okno_ref_));
 											});
 
-	Button over_network_client({200, 50}, {150, 150}, "network as client", _okno,
+	Button over_network_client({200, 50}, {150, 150}, "network as client",resource_manager_ref_.get_font(), _okno,
 														 [&]
 														 {
-														 	StateMachine::create_new_state<OnlineClientState>(machine_ref_,okno_ref_);
+														 	machine_ref_.run(StateMachine::create_new_state<OnlineClientState>(machine_ref_,okno_ref_));
 														 });
-	Button over_network_host({200, 50}, {150, 200}, "network as host", _okno,
+	Button over_network_host({200, 50}, {150, 200}, "network as host",resource_manager_ref_.get_font(), _okno,
 													 [&]
 													 {
-													 	StateMachine::create_new_state<OnlineHostState>(machine_ref_,okno_ref_);
+													 	machine_ref_.run(StateMachine::create_new_state<OnlineHostState>(machine_ref_,okno_ref_));
 													 });
 	buttons_.push_back(std::make_unique<Button>(over_network_client));
 	buttons_.push_back(std::make_unique<Button>(over_network_host));
@@ -66,6 +68,17 @@ void MenuState::update()
 		if (event->is<sf::Event::Closed>())
 		{
 			okno_ref_.close();
+		}
+		if (const auto* mouse_pressed = event->getIf<sf::Event::MouseButtonPressed>())
+		{
+				if (mouse_pressed->button == sf::Mouse::Button::Left)
+				{
+					std::cout << "Left button pressed" << std::endl;
+					for(auto& button : buttons_)
+					{
+						button->update();
+					}
+				}
 		}
 	}
 }

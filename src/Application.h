@@ -18,7 +18,7 @@ public:
 private:
 	sf::RenderWindow window_;
 	StateMachine state_machine_;
-	ResourceManager resource_manager_;
+	ResourceManager* resource_manager_;
 };
 
 

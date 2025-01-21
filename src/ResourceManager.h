@@ -9,30 +9,13 @@
 
 class ResourceManager {
 	public:
-ResourceManager(const ResourceManager&) = delete;
-	ResourceManager& operator=(const ResourceManager&) = delete;
+	static ResourceManager& get_instance();
 
 	sf::Texture& get_board() { return board_texture_;}
 	sf::Texture& get_o()  { return  the_o_;}
 	sf::Texture& get_x() { return  the_x_;}
 	sf::Font& get_font() { return font_;}
 
-	static ResourceManager& init()
-	{
-		if (instance_ == nullptr)
-		{
-			instance_ = new ResourceManager();
-			return * instance_;
-		}else
-		{
-			assert(instance_ != nullptr);
-			return *instance_;
-		}
-	}
-	static ResourceManager& get_instance()
-    {
-        return *instance_;
-    }
 private:
 	ResourceManager();
 	static ResourceManager* instance_;

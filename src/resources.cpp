@@ -14,7 +14,7 @@ int czyja_tura(GameState *_game_state) {
   else
     return 1; // krzyzyk
 }
-bool is_valid_move(GameState *_gamestate) {
+bool is_valid_move(GameState *_gamestate) {2
   if (_gamestate->board[_gamestate->wybor] != 0) {
     return false;
   }

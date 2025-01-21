@@ -63,3 +63,11 @@ std::string debug_string(int _tura, int _wybor) {
   std::string final = "Tura: " + str_tura + " Wybor:" + str_wybor;
   return final;
 }
+
+int get_1D_index(sf::Vector2f _pos)
+{
+  const int dlugosc_wiersza = 3;
+  const int wysokosc_wiersza = 100;
+  const int szerokosc_wiersza = 100;
+  return (_pos.y/100) * dlugosc_wiersza + (_pos.x/100); // Indexes
+}

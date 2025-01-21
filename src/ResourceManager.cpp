@@ -8,7 +8,6 @@
 
 ResourceManager::ResourceManager()
 {
-	instance_ = &init();
 	//load textures
 	if (!board_texture_.loadFromFile("board.png"))
 	{
@@ -27,7 +26,15 @@ ResourceManager::ResourceManager()
 	{
 		std::cerr << "Error loading arial.ttf" << std::endl;
 	}
-
+}
+ResourceManager* ResourceManager::instance_=nullptr;
+ResourceManager &ResourceManager::get_instance()
+{
+	if (ResourceManager::instance_ == nullptr)
+	{
+		ResourceManager::instance_ = new ResourceManager();
+	}
+	return *ResourceManager::instance_;
 }
 
 

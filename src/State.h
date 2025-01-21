@@ -6,12 +6,11 @@
 #define STATE_H
 #include <SFML/Graphics.hpp>
 class StateMachine;
-
+class ResourceManager;
 namespace sf
 {
     class RenderWindow;
 }
-/*TODO */
 class State
 {
 public:
@@ -27,6 +26,7 @@ protected:
     StateMachine & machine_ref_;
     sf::RenderWindow& okno_ref_;
     std::unique_ptr<State> next_state_ptr_;
+    ResourceManager& resource_manager_ref_;
 private:
 };
 

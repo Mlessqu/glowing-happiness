@@ -5,8 +5,9 @@
 #ifndef LOCALGAMESTATE_H
 #define LOCALGAMESTATE_H
 
+#include "Game.h"
 #include "State.h"
-
+class Game;
 class StateMachine;
 namespace sf
 {
@@ -20,6 +21,11 @@ public:
 	void update() override;
 	void draw() override;
 private:
+	Game game_;
+	sf::Sprite kolko_sprite_;
+	sf::Sprite krzyzyk_sprite_;
+	sf::Sprite board_sprite_;
+	std::vector<sf::Sprite> sprites_to_draw_;
 
 };
 
