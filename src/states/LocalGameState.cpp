@@ -15,13 +15,17 @@ LocalGameState::LocalGameState(StateMachine &_machine_ref, sf::RenderWindow &_ok
 : State{_machine_ref,_okno},
 kolko_sprite_(resource_manager_ref_.get_o()),
 krzyzyk_sprite_(resource_manager_ref_.get_x()),
-board_sprite_(resource_manager_ref_.get_board())
+board_sprite_(resource_manager_ref_.get_board()),
+zwyciezca_tekst_(resource_manager_ref_.get_font())
 {
 	sprites_to_draw_.push_back(board_sprite_);
 	okno_ref_.clear();
 	okno_ref_.draw(board_sprite_);
 	okno_ref_.display();
 	std::cout << "LocalGameState::LocalGameState()" << std::endl;
+	zwyciezca_tekst_.setOutlineColor(sf::Color::White);
+	zwyciezca_tekst_.setFillColor(sf::Color::Green);
+	zwyciezca_tekst_.setString(std::string("LocalGameState::zwyciezca_tekst_"));
 }
 
 void LocalGameState::update()

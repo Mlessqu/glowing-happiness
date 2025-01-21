@@ -12,7 +12,8 @@
 
 Application::Application() =default;
 
-void Application::run() { //init and main loop of the program
+void Application::run()
+{ //init and main loop of the program
 	//create render window
 	window_.create(sf::VideoMode({300,300}),"Tic Tac Toe");
 	window_.setFramerateLimit(60);

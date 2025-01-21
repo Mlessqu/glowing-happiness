@@ -26,7 +26,7 @@ private:
 	sf::Sprite krzyzyk_sprite_;
 	sf::Sprite board_sprite_;
 	std::vector<sf::Sprite> sprites_to_draw_;
-
+	sf::Text zwyciezca_tekst_;
 };
 
 
