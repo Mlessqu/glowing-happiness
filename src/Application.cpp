@@ -6,8 +6,8 @@
 
 #include <iostream>
 
-#include"State.h"
-#include "MenuState.h"
+#include"states/State.h"
+#include "states/MenuState.h"
 #include"ResourceManager.h"
 
 Application::Application() =default;

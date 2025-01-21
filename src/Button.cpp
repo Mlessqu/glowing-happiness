@@ -1,4 +1,4 @@
-#include "button.hpp"
+#include "Button.h"
 
 #include "ResourceManager.h"
 #include "utility.hpp"

@@ -5,7 +5,7 @@
 #ifndef LOCALGAMESTATE_H
 #define LOCALGAMESTATE_H
 
-#include "Game.h"
+#include "../Game.h"
 #include "State.h"
 class Game;
 class StateMachine;

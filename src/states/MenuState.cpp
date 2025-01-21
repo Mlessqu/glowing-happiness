@@ -3,15 +3,15 @@
 //
 
 #include "MenuState.h"
-#include "button.hpp"
+#include "../Button.h"
 #include <iostream>
 
 #include "AiGameState.h"
 #include "LocalGameState.h"
 #include "OnlineClientState.h"
 #include "OnlineHostState.h"
-#include "ResourceManager.h"
-#include "StateMachine.h"
+#include "../ResourceManager.h"
+#include "../StateMachine.h"
 class LocalGameState;
 class OnlineClientState;
 class OnlineHostState;

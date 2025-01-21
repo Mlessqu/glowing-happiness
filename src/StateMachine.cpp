@@ -4,7 +4,7 @@
 
 #include "StateMachine.h"
 #include<SFML/Window.hpp>
-#include"State.h"
+#include"states/State.h"
 
 namespace sf {
 	class RenderWindow;

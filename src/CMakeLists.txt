@@ -1,23 +1,23 @@
-add_executable(tic-tac main.cpp states.hpp states.cpp utility.hpp utility.cpp
- button.hpp button.cpp resources.cpp ai.cpp
+add_executable(tic-tac main.cpp states.cpp utility.hpp utility.cpp
+        Button.h Button.cpp ai.cpp
         StateMachine.cpp
         StateMachine.h
-        State.cpp
-        State.h
         Application.cpp
         Application.h
-        MenuState.cpp
-        MenuState.h
+        states/MenuState.cpp
+        states/MenuState.h
         ResourceManager.cpp
         ResourceManager.h
-        LocalGameState.cpp
-        LocalGameState.h
-        AiGameState.cpp
-        AiGameState.h
-        OnlineHostState.cpp
-        OnlineHostState.h
-        OnlineClientState.cpp
-        OnlineClientState.h
+        states/LocalGameState.cpp
+        states/LocalGameState.h
+        states/AiGameState.cpp
+        states/AiGameState.h
+        states/OnlineHostState.cpp
+        states/OnlineHostState.h
+        states/OnlineClientState.cpp
+        states/OnlineClientState.h
         Game.cpp
         Game.h
+        states/State.h
+        states/State.cpp
 )

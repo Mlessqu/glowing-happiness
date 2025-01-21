@@ -1,5 +1,4 @@
 
-#include "states.hpp"
 #include <SFML/Graphics.hpp>
 #include <cassert>
 #include <iostream>

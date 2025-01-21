@@ -2,9 +2,9 @@
 // Created by Missqu on 1/16/25.
 //
 
-#include "State.h"
+#include "./State.h"
 
-#include "ResourceManager.h"
+#include "../ResourceManager.h"
 
 
 State::State(StateMachine &_machine_ref, sf::RenderWindow &_okno):

@@ -6,9 +6,9 @@
 
 #include <iostream>
 
-#include "ResourceManager.h"
-#include "StateMachine.h"
-#include "utility.hpp"
+#include "../ResourceManager.h"
+#include "../StateMachine.h"
+#include "../utility.hpp"
 
 
 LocalGameState::LocalGameState(StateMachine &_machine_ref, sf::RenderWindow &_okno)

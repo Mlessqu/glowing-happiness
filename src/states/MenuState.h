@@ -5,8 +5,7 @@
 #ifndef MENUSTATE_H
 #define MENUSTATE_H
 #include "State.h"
-#include "button.hpp"
-#include<SFML/Graphics.hpp>
+#include "../Button.h"
 class StateMachine;
 namespace sf
 {
