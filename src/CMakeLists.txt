@@ -1,5 +1,5 @@
 add_executable(tic-tac main.cpp states.cpp Utility.h Utility.cpp
-        Button.h Button.cpp
+        gui/Button.h gui/Button.cpp
         StateMachine.cpp
         StateMachine.h
         Application.cpp
@@ -20,4 +20,6 @@ add_executable(tic-tac main.cpp states.cpp Utility.h Utility.cpp
         Game.h
         states/State.h
         states/State.cpp
+        states/EventHandle.cpp
+        states/EventHandle.h
 )

@@ -8,124 +8,83 @@
 #include "Utility.h"
 
 enum Turn;
-Game::Game()
+Game::Game(bool _czy_krzyzyk)
 {
-
+	//init game object
+	std::array<int,9> temp = {0};
+	board_=  temp;
 	tura_=0;
-}
-
-void Game::init(std::array<int, 9> _board, int _tura)
-{
-	board_ = _board;
-	tura_ = _tura;
-
-}
-
-
-void Game::debug_info()
-{
-	draw_line(7);
-	std::cout << "\n";
-	int counter = 0;
-	for (int i = 0; i < 18; i++) {
-		if (counter == 9) {
-			std::cout << "shit";
-			return;
-		}
-		if (!(i % 2)) {
-			std::cout << "#";
-		} else {
-			std::cout << draw_sign(board_[counter]);
-			counter++;
-		}
-		const int enter_after = 6;
-		if (((i % enter_after) == 0) && i != 0)
-			std::cout << "\n#";
-	}
-	std::cout << "#\n";
-	draw_line(6);
-	std::cout << "\n";
-	std::cout << "Tura: " << tura_ << std::endl;
-
-}
-
-void Game::reset()
-{
-	// reset rundy
-}
-
-
-void Game::end_game()
-{
-	//if somebody wins
-		Turn enum_turn = czyja_to_byla();
-	if(tura_ == 8)//mamy remis
+	wygrana_ = false;
+	if (_czy_krzyzyk) //krzyzyk zaczyna
 	{
-		std::cout << "Remis";
-		return;
+		player1=true;
+		player2=false;
+	}else //kolka zaczynaja
+	{
+		player1=false;
+		player2=true;
 	}
-		if (enum_turn == krzyzyk)
-		{
-			std::cout << "Wygrał krzyzyk!";
-			return;
-		}else if (enum_turn == kolko)
-		{
-			std::cout << "Wygralo kolko!";
-			return;
-		}
 }
 
-bool Game::make_turn(int _wybor) //we return true on sucesful turn
-{
-	current_wybor_ = _wybor;
-	if (wygrana_ == true)
-		return false;
 
-		if (is_legal_move(_wybor)==false)
+
+void Game::logic(int _wybor)
+{
+		if (player1)
+		{
+			make_turn(_wybor,krzyzyk);
+			if (check_winner())
+			{
+				std::cout<<"Player 1 wins!"<<std::endl;
+				bool wygrana = true;
+			}
+			player1= false;
+			player2=true;
+		}else
+			if (player2)
+			{
+				make_turn(_wybor,kolko);
+				if (check_winner())
+				{
+					std::cout<<"Player 2 wins!"<<std::endl;
+					bool wygrana = true;
+				}
+				player1=true;
+				player2=false;
+			}
+}
+
+
+
+bool Game::make_turn(int _wybor,Turn _turn) //we return true on sucesful turn
+{
+	if (wygrana_ == true)
+		return false; //if someone won we cease to make any turns
+
+		if (is_legal_move(_wybor)==false) //not a legal move
 		{
 			return false;
 		}
-		board_[_wybor] = czyja_tura(); //actual move here
-
+	if (_turn == krzyzyk)
+	{
+		board_[_wybor] =1; //X
+	}else if(_turn == kolko)
+	{
+		board_[_wybor]=2;//O
+	}
 	++tura_; //increment tura
 	if (check_winner()) //na samym koncu check if there is a winner
 	{
 		//who won?
-		std::cout << "inside check_winner, before end_game()" << std::endl;
-		end_game();
+		// std::cout << "inside check_winner, before end_game()" << std::endl;
 		wygrana_ = true;
 	}
-	debug_info();
+
+	// debug_info();
 	std::cout << "Wybor:" <<  _wybor << std::endl;
 	return true;
 }
 
-Turn Game::czyja_to_byla()
-{
-	if (tura_ %2)
-	{
-		return kolko;
-	}else
-	{
-		return krzyzyk;
-	}
-}
-
-std::array<int, 9> Game::get_current_board_state() const
-{
-	return board_;
-}
-
-int Game::get_current_turn() const {
-	return tura_;
-}
-
-
-
-void Game::update()
-{
-
-}
 
 
 
@@ -144,13 +103,10 @@ bool Game::is_legal_move(int _wybor)
 
 Turn Game::czyja_tura()
 {
-		if (tura_ %2)
-		{
+		if (player1==true)
 			return krzyzyk;
-		}else
-		{
-			return kolko;
-		}
+	if (player2==true)
+		return kolko;
 }
 
 bool Game::check_winner() //checks if current board has any winner

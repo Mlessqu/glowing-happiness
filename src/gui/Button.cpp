@@ -1,7 +1,7 @@
 #include "Button.h"
 
-#include "ResourceManager.h"
-#include "Utility.h"
+#include "../ResourceManager.h"
+#include "../Utility.h"
 #include <iostream>
 class State;
 Button::Button(sf::Vector2f _size, sf::Vector2f _pos, const std::string &_caption,const sf::Font& _font,

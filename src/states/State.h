@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 class StateMachine;
 class ResourceManager;
+class EventHandle;
 namespace sf
 {
     class RenderWindow;
@@ -23,10 +24,12 @@ public:
     virtual void draw() = 0;
     std::unique_ptr<State> next_state();
 protected:
+    //void handle_event();
     StateMachine & machine_ref_;
     sf::RenderWindow& okno_ref_;
     std::unique_ptr<State> next_state_ptr_;
     ResourceManager& resource_manager_ref_;
+    EventHandle& event_handle_ref_;
 private:
 };
 

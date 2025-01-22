@@ -3,7 +3,7 @@
 //
 
 #include "MenuState.h"
-#include "../Button.h"
+#include "../gui/Button.h"
 #include <iostream>
 
 #include "AiGameState.h"

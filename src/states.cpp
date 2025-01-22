@@ -1,34 +1,6 @@
 
 
 /*
-void menu_loop(sf::RenderWindow &_okno) {
-
-  while (_okno.isOpen())
-    {
-    while (const std::optional _event = _okno.pollEvent()) {
-      if (_event->is<sf::Event::Closed>()) {
-        _okno.close();
-      }else if (_event->is<sf::Event::MouseButtonPressed>())
-      {
-          for (const auto & button : buttons)
-          {
-            button->update();
-          }
-      }
-    }
-    start_button.update();
-    vs_ai_button.update();
-    over_network_client.update();
-    over_network_host.update();
-    _okno.clear();
-    _okno.draw(start_button);
-    _okno.draw(vs_ai_button);
-    _okno.draw(zwyciezca_text);
-    _okno.draw(over_network_client);
-    _okno.draw(over_network_host);
-    _okno.display();
-  }
-}
 
 void co_op_game_loop(sf::RenderWindow &_okno) {
   // game loop initialization here

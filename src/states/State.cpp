@@ -4,13 +4,15 @@
 
 #include "./State.h"
 
+#include "EventHandle.h"
 #include "../ResourceManager.h"
 
 
 State::State(StateMachine &_machine_ref, sf::RenderWindow &_okno):
 machine_ref_{_machine_ref},
 okno_ref_{_okno},
-resource_manager_ref_{ResourceManager::get_instance()}
+resource_manager_ref_{ResourceManager::get_instance()},
+event_handle_ref_{EventHandle::get_instance(_machine_ref, okno_ref_)}
 {
 
 }
