@@ -9,6 +9,8 @@
 #include "ResourceManager.h"
 #include"StateMachine.h"
 
+#include "EventHandle.h"
+
 class Application {
 public:
 	Application(const Application&) = delete;
@@ -19,6 +21,7 @@ private:
 	sf::RenderWindow window_;
 	StateMachine state_machine_;
 	ResourceManager* resource_manager_;
+	EventHandle* event_handle_;
 };
 
 

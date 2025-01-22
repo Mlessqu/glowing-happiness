@@ -18,6 +18,7 @@ void Application::run()
 	window_.create(sf::VideoMode({300,300}),"Tic Tac Toe");
 	window_.setFramerateLimit(60);
 	resource_manager_ = &ResourceManager::get_instance();
+	event_handle_ = &EventHandle::get_instance(state_machine_,window_);
 	//initialize state machine
 	state_machine_.run(StateMachine::create_new_state<MenuState>(state_machine_,window_));
 

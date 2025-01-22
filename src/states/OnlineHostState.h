@@ -7,6 +7,7 @@
 
 #include "State.h"
 #include "../Game.h"
+#include"SFML/Network.hpp"
 class Game;
 class StateMachine;
 namespace sf

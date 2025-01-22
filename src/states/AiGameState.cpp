@@ -9,7 +9,9 @@
 #include "../ResourceManager.h"
 #include "../Utility.h"
 #include "../StateMachine.h"
-
+#include "../EventHandle.h"
+#include <stdlib.h>
+#include <time.h>
 class ResourceManager;
 class StateMachine;
 class Game;
@@ -34,57 +36,36 @@ zwyciezca_tekst_(resource_manager_ref_.get_font())
 
 void AiGameState::update()
 {
-
-	while (const std::optional event = okno_ref_.pollEvent())
+	event_handle_ref_.handle_events();
+	int wybor_gracza = -1;
+	if (event_handle_ref_.input_data_.left_pressed == true) //was it left one?
 	{
-		if (event->is<sf::Event::Closed>())
-		{
-			okno_ref_.close();
-		}
-		if (const auto *mouse_pressed = event->getIf<sf::Event::MouseButtonPressed>()) //was mouse button pressed?
-		{
-			if (mouse_pressed->button == sf::Mouse::Button::Left) //was it left one?
-			{
-
-
-
-				if(game_.czyja_tura() == krzyzyk) //jezeli tura zostala wykonana to trzeba narysowac
-				{
-					//tura gracza
-					auto mouse_pos =  relative_mouse_pos(okno_ref_); // get relative mouse cords to window
-					int wybor = get_1D_index(mouse_pos.x/100,mouse_pos.y/100); //calculate at which field was clicked
-					sf::Vector2f temp_pos = {get_2D_index(wybor).x * 100.f,get_2D_index(wybor).y*100.f}; //snap sprite to grid
-					std::cout << "Human player choice." << std::endl;
-					if (game_.make_turn(wybor,krzyzyk))
-					{
-						krzyzyk_sprite_.setPosition(temp_pos);
-						sprites_to_draw_.push_back(krzyzyk_sprite_);
-					}
-
-
-					//tura komputer
-					bool exit_flag = true;
-					while (exit_flag)
-					{
-						wybor = random_int(0,9);
-						std::cout << "AI choice: " << wybor << std::endl;
-						if (game_.make_turn(wybor,kolko))
-						{
-							sf::Vector2f temp_pos = {get_2D_index(wybor).x * 100.f,get_2D_index(wybor).y*100.f};
-							kolko_sprite_.setPosition(temp_pos);
-							sprites_to_draw_.push_back(kolko_sprite_);
-							exit_flag = false;
-						}
-					}
-				}
-
-
-			}else if(mouse_pressed->button == sf::Mouse::Button::Right)
-			{
-
-				machine_ref_.pop_state();// quit here
-			}
-		}
+		sf::Vector2i mouse_pos = event_handle_ref_.input_data_.mouse_pos_on_left_click;
+		wybor_gracza = get_1D_index(mouse_pos.x / 100, mouse_pos.y / 100); //calculate at which field was clicked
+	}
+	//---------------------------------------------------
+	//---------------
+	if (game_.logic(wybor_gracza,krzyzyk)) // if game logic iteration succesful return true else false
+	{
+		sf::Vector2f temp_pos = {get_2D_index(wybor_gracza).x * 100.f, get_2D_index(wybor_gracza).y * 100.f};
+			krzyzyk_sprite_.setPosition(temp_pos);
+			sprites_to_draw_.push_back(krzyzyk_sprite_);
+	}
+	//---------------------------------------------------
+	int wybor_bota = -1;
+	srand (time(NULL));
+	wybor_bota= rand()%9;
+	// std::cout << "wybor_bota: " << wybor_bota << std::endl;
+	//---------------------------------------------------
+	if (game_.logic(wybor_bota,kolko))
+	{
+		sf::Vector2f temp_pos = {get_2D_index(wybor_bota).x * 100.f, get_2D_index(wybor_bota).y * 100.f};
+		kolko_sprite_.setPosition(temp_pos);
+		sprites_to_draw_.push_back(kolko_sprite_);
+	}
+	if (event_handle_ref_.input_data_.right_pressed == true)
+	{
+		machine_ref_.pop_state();
 	}
 }
 

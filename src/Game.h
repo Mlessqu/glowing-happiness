@@ -11,20 +11,20 @@ enum Turn { pusto,krzyzyk,kolko};
 class Game
 {
 public:
-	Game(bool _czy_krzyzyk);
+	explicit Game(bool _czy_krzyzyk);
 	void end_game();
-	bool make_turn(int _wybor,Turn);
+	bool make_turn(int _wybor,Turn _tura);
 	Turn czyja_tura();
 	bool check_winner();
 	bool is_legal_move(int _wybor);
-	void logic(int _wybor);
-	bool player1 = true;
+	bool logic(int _wybor,Turn _who_attempts);
+
 	private:
 	int tura_=0;
 	std::array<int,9> board_ = {};
 	bool wygrana_ = false;
 	bool player2 = false;
-
+	bool player1 = false;
 
 };
 

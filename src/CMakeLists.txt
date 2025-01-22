@@ -20,6 +20,6 @@ add_executable(tic-tac main.cpp states.cpp Utility.h Utility.cpp
         Game.h
         states/State.h
         states/State.cpp
-        states/EventHandle.cpp
-        states/EventHandle.h
+        EventHandle.cpp
+        EventHandle.h
 )
