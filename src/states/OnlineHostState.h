@@ -13,6 +13,8 @@ class StateMachine;
 namespace sf
 {
 	class RenderWindow;
+	class TcpSocket;
+	class TcpListener;
 }
 
 class OnlineHostState : public State{
@@ -29,7 +31,9 @@ private:
 	sf::Sprite board_sprite_;
 	std::vector<sf::Sprite> sprites_to_draw_;
 	sf::Text zwyciezca_tekst_;
-	const std::optional<sf::Event> event_;
+	sf::TcpSocket socket_;
+	sf::TcpListener listener_;
+	bool my_turn = true;
 };
 
 

@@ -9,6 +9,8 @@ add_executable(tic-tac main.cpp states.cpp Utility.h Utility.cpp
         ResourceManager.cpp
         ResourceManager.h
         states/LocalGameState.cpp
+
+
         states/LocalGameState.h
         states/AiGameState.cpp
         states/AiGameState.h
@@ -22,4 +24,5 @@ add_executable(tic-tac main.cpp states.cpp Utility.h Utility.cpp
         states/State.cpp
         EventHandle.cpp
         EventHandle.h
+        NetworkData.h
 )

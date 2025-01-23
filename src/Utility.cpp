@@ -31,7 +31,7 @@ char draw_sign(int _val) {
 }
 
 int get_1D_index(int _x, int _y) {
-  const int dlugosc_wiersza = 3;
+  constexpr int dlugosc_wiersza = 3;
   return _y * dlugosc_wiersza + _x; // Indexes
 }
 sf::Vector2f get_2D_index(int _len) {

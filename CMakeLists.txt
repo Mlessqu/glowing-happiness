@@ -15,3 +15,4 @@ FetchContent_MakeAvailable(SFML)
 add_subdirectory(src)
 
 target_link_libraries(tic-tac PRIVATE SFML::Graphics SFML::Network)
+

@@ -6,10 +6,12 @@
 #define ONLINECLIENTSTATE_H
 #include "State.h"
 #include  "../Game.h"
+#include <SFML/Network.hpp>
 class Game;
 class StateMachine;
 namespace sf
 {
+	class TcpSocket;
 	class RenderWindow;
 }
 
@@ -27,6 +29,8 @@ private:
 	sf::Sprite board_sprite_;
 	std::vector<sf::Sprite> sprites_to_draw_;
 	sf::Text zwyciezca_tekst_;
+	sf::TcpSocket socket_;
+	bool my_turn = false;
 };
 
 
