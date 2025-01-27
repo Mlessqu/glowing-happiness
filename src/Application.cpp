@@ -21,13 +21,19 @@ void Application::run()
 	event_handle_ = &EventHandle::get_instance(state_machine_,window_);
 	//initialize state machine
 	state_machine_.run(StateMachine::create_new_state<MenuState>(state_machine_,window_));
-
+	sf::Clock clock;
+	sf::Time lag = sf::Time::Zero;
+	sf::Time delta_time = sf::Time::Zero;
 	//main loop
 	while (state_machine_.running())
 	{
-			state_machine_.next_state();
-			state_machine_.update();
+		delta_time = clock.restart();
+		//---------------------------------
+		state_machine_.next_state();
+
+		state_machine_.update(delta_time, lag);
 		state_machine_.draw();
+		//-------------------------------------------
 	}
 }
 

@@ -4,6 +4,8 @@
 
 #ifndef GAME_H
 #define GAME_H
+#include "NetworkData.h"
+
 #include "SFML/Graphics.hpp"
 
 enum Turn { pusto,krzyzyk,kolko};
@@ -18,7 +20,7 @@ public:
 	bool check_winner();
 	bool is_legal_move(int _wybor);
 	bool logic(int _wybor,Turn _who_attempts);
-
+	NetworkData get_data_for_network();
 	private:
 	int tura_=0;
 	std::array<int,9> board_ = {};

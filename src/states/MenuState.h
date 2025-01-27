@@ -16,7 +16,7 @@ class MenuState final : public State {
 	MenuState(StateMachine &_machine_ref, sf::RenderWindow &_okno);
 	 void pause() override;
 	 void resume() override;
-	 void update() override;
+	 void update(sf::Time& _delta_time, sf::Time& _lag) override;
 	 void draw() override;
 private:
 	std::vector<std::unique_ptr<Button>> buttons_;

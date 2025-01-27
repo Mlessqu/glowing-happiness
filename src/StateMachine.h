@@ -19,7 +19,7 @@ class StateMachine {
     ~StateMachine();
     void next_state();
     void pop_state();
-    void update();
+    void update(sf::Time& _delta_time, sf::Time& _lag);
     void draw();
     void quit();
     void run(std::unique_ptr<State> _state);

@@ -34,11 +34,11 @@ zwyciezca_tekst_(resource_manager_ref_.get_font())
 
 }
 
-void AiGameState::update()
+void AiGameState::update(sf::Time& _delta_time, sf::Time& _lag)
 {
 	event_handle_ref_.handle_events();
 	int wybor_gracza = -1;
-	if (event_handle_ref_.input_data_.left_pressed == true) //was it left one?
+	if (event_handle_ref_.input_data_.left_mouse_pressed == true) //was it left one?
 	{
 		sf::Vector2i mouse_pos = event_handle_ref_.input_data_.mouse_pos_on_left_click;
 		wybor_gracza = get_1D_index(mouse_pos.x / 100, mouse_pos.y / 100); //calculate at which field was clicked
@@ -63,7 +63,7 @@ void AiGameState::update()
 		kolko_sprite_.setPosition(temp_pos);
 		sprites_to_draw_.push_back(kolko_sprite_);
 	}
-	if (event_handle_ref_.input_data_.right_pressed == true)
+	if (event_handle_ref_.input_data_.right_mouse_pressed == true)
 	{
 		machine_ref_.pop_state();
 	}

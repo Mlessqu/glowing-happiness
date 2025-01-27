@@ -20,7 +20,7 @@ public:
     virtual ~State() = default;
     virtual void pause() = 0;
     virtual void resume() = 0;
-    virtual void update() = 0;
+    virtual void update(sf::Time& _delta_time, sf::Time& _lag) = 0;
     virtual void draw() = 0;
     std::unique_ptr<State> next_state();
 protected:

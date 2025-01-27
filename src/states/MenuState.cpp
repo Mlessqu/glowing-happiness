@@ -10,6 +10,8 @@
 #include "LocalGameState.h"
 #include "OnlineClientState.h"
 #include "OnlineHostState.h"
+
+#include "../EventHandle.h"
 #include "../ResourceManager.h"
 #include "../StateMachine.h"
 class LocalGameState;
@@ -61,24 +63,14 @@ void MenuState::draw()
 	okno_ref_.display();
 }
 
-void MenuState::update()
+void MenuState::update(sf::Time& _delta_time, sf::Time& _lag)
 {
-	while (const std::optional event = okno_ref_.pollEvent())
+	event_handle_ref_.handle_events();
+	if (event_handle_ref_.input_data_.left_mouse_pressed==true)
 	{
-		if (event->is<sf::Event::Closed>())
+		for(auto& button : buttons_)
 		{
-			okno_ref_.close();
-		}
-		if (const auto* mouse_pressed = event->getIf<sf::Event::MouseButtonPressed>())
-		{
-				if (mouse_pressed->button == sf::Mouse::Button::Left)
-				{
-					std::cout << "Left button pressed" << std::endl;
-					for(auto& button : buttons_)
-					{
-						button->update();
-					}
-				}
+			button->update();
 		}
 	}
 }

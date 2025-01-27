@@ -20,34 +20,69 @@ void OnlineHostState::resume()
 {
 }
 
-void OnlineHostState::update()
+void OnlineHostState::update(sf::Time& _delta_time, sf::Time& _lag)
 {
     event_handle_ref_.handle_events();
-    int wybor_gracza = -1;
-    if (event_handle_ref_.input_data_.left_pressed == true) //was it left one?
+    //-----------------------------------------------
+    if (my_turn==true)
     {
-        sf::Vector2i mouse_pos = event_handle_ref_.input_data_.mouse_pos_on_left_click;
-        wybor_gracza = get_1D_index(mouse_pos.x / 100, mouse_pos.y / 100); //calculate at which field was clicked
+        int wybor_gracza = -1;
+        if (event_handle_ref_.input_data_.left_mouse_pressed == true) //was it left one?
+        {
+            sf::Vector2i mouse_pos = event_handle_ref_.input_data_.mouse_pos_on_left_click;
+            wybor_gracza = get_1D_index(mouse_pos.x / 100, mouse_pos.y / 100); //calculate at which field was clicked
+        }
+        //---------------------------------------------------
+        //---------------
+        if (game_.logic(wybor_gracza, krzyzyk)) //
+        {
+            network_data_ = game_.get_data_for_network();
+            network_packet_ << network_data_; // writing data into packet
+            while (socket_.send(network_packet_) != sf::Socket::Status::Done)
+            {
+            }
+            //------------------------------------------
+            sf::Vector2f temp_pos = {get_2D_index(wybor_gracza).x * 100.f, get_2D_index(wybor_gracza).y * 100.f};
+            krzyzyk_sprite_.setPosition(temp_pos);
+            sprites_to_draw_.push_back(krzyzyk_sprite_);
+            my_turn=false;
+            socket_.setBlocking(true);
+        }
+
     }
     //---------------------------------------------------
-    //---------------
-    if (game_.logic(wybor_gracza, krzyzyk)) //
+    if (my_turn==false)
     {
-        sf::Vector2f temp_pos = {get_2D_index(wybor_gracza).x * 100.f, get_2D_index(wybor_gracza).y * 100.f};
-        krzyzyk_sprite_.setPosition(temp_pos);
-        sprites_to_draw_.push_back(krzyzyk_sprite_);
+        int wybor_oponenta = -1;
+        while (socket_.receive(network_packet_) != sf::Socket::Status::Done)
+        {
+        } // receive network packet from client
+        if (network_packet_ >> network_data_) //reading received data
+        {
+            std::cout << "Reading host data success." <<
+                "\nKto: " << network_data_.kto <<
+                "\nTura:" << network_data_.turn <<
+                "\nWybor:" << network_data_.wybor << std::endl;
+        }
+        else
+        {
+            std::cerr << "Reading host data failed.\n";
+            return; //
+        }
+        wybor_oponenta = network_data_.wybor;
+        //---------------------------------------------------
+        if (game_.logic(wybor_oponenta, kolko))
+        {
+
+            sf::Vector2f temp_pos = {get_2D_index(wybor_oponenta).x * 100.f, get_2D_index(wybor_oponenta).y * 100.f};
+            kolko_sprite_.setPosition(temp_pos);
+            sprites_to_draw_.push_back(kolko_sprite_);
+            my_turn=true;
+            socket_.setBlocking(false);
+        }
+
     }
-    //---------------------------------------------------
-    int wybor_oponenta = -1;
-    // std::cout << "wybor_bota: " << wybor_bota << std::endl;
-    //---------------------------------------------------
-    if (game_.logic(wybor_oponenta, kolko))
-    {
-        sf::Vector2f temp_pos = {get_2D_index(wybor_oponenta).x * 100.f, get_2D_index(wybor_oponenta).y * 100.f};
-        kolko_sprite_.setPosition(temp_pos);
-        sprites_to_draw_.push_back(kolko_sprite_);
-    }
-    if (event_handle_ref_.input_data_.right_pressed == true)
+    if (event_handle_ref_.input_data_.right_mouse_pressed == true)
     {
         machine_ref_.pop_state();
     }
@@ -91,6 +126,6 @@ OnlineHostState::OnlineHostState(StateMachine& _machine_ref, sf::RenderWindow& _
     {
         //error
     }
-    //socket_.setBlocking(false);
+    socket_.setBlocking(false);
 #pragma endregion
 }

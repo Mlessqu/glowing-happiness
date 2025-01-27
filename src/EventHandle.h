@@ -8,12 +8,16 @@
 #include "StateMachine.h"
 /*Event visitor, overloaded visitation*/
 struct InputData
-    {
-        sf::Vector2i mouse_pos_on_left_click;
-        sf::Vector2i mouse_pos_on_right_click;
-        bool left_pressed = false;
-         bool right_pressed = false;
-    };
+{
+    sf::Vector2i mouse_pos_on_left_click;
+    sf::Vector2i mouse_pos_on_right_click;
+    bool left_mouse_pressed = false;
+    bool right_mouse_pressed = false;
+    bool left = false;
+    bool right = false;
+    bool up = false;
+    bool down = false;
+};
 class EventHandle {
 public:
     static EventHandle &get_instance(StateMachine& _state_machine_ref, sf::RenderWindow& _okno);

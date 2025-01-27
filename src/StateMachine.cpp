@@ -38,8 +38,9 @@ void StateMachine::pop_state() {
 }
 
 
-void StateMachine::update() {
-	states.top()->update();
+void StateMachine::update(sf::Time& _delta_time, sf::Time& _lag)
+{
+	states.top()->update(_delta_time, _lag);
 }
 void StateMachine::draw()
 {

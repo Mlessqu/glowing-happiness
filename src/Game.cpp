@@ -28,6 +28,19 @@ Game::Game(bool _czy_krzyzyk)
     }
 }
 
+void Game::end_game()
+{
+}
+
+
+NetworkData Game::get_data_for_network()
+{
+    NetworkData network_data;
+    network_data.wybor=-1;
+    network_data.kto = this->czyja_tura();
+    network_data.turn = this->tura_;
+}
+
 
 bool Game::logic(int _wybor, const Turn _who_attempts)
 {
